@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_go_home"
+        android:title="@string/menu_go_home"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_first_load"
+        android:title="@string/menu_first_load"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_clear_first"
+        android:title="@string/menu_clear_first"
+        app:showAsAction="never" />
+</menu>
