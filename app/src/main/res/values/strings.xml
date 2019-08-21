@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">AndroidDemos</string>
+
+    <string name="common_submit_txt">提交</string>
+
+    <!-- Main start -->
     <string name="menu_go_home">返回主页</string>
     <string name="menu_first_load">设为首加载</string>
     <string name="menu_clear_first">清除首加载</string>
+    <!-- Main end -->
+
+    <!-- Infinite List start -->
+    <string name="infinite_et_position_hint">滚动到哪儿去？</string>
+    <!-- Infinite List end -->
 </resources>

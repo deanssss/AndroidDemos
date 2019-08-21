@@ -19,5 +19,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".SplashActivity" />
+        <activity android:name=".demos.infinite_list.InfiniteTabActivity" />
     </application>
 </manifest>

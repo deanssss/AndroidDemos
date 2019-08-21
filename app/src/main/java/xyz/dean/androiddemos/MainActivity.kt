@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import xyz.dean.androiddemos.demos.infinite_list.InfiniteTabActivity
 
 class MainActivity : BaseActivity() {
 
@@ -17,7 +18,9 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val demoList = listOf<DemoItem>()
+        val demoList = listOf(
+            DemoItem("无限循环列表", "一个真正的无限循环列表，通过RecyclerView的LayoutManager实现。", InfiniteTabActivity::class.java)
+        )
 
         findViewById<RecyclerView>(R.id.rv_practice_list).apply {
             layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
