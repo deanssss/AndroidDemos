@@ -10,9 +10,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import xyz.dean.androiddemos.BaseActivity
+import xyz.dean.androiddemos.DemoItem
 import xyz.dean.androiddemos.R
 
 class InfiniteTabActivity : BaseActivity() {
+    override fun getDemoItem() = demoItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +32,13 @@ class InfiniteTabActivity : BaseActivity() {
             val position = findViewById<EditText>(R.id.et_position).text.toString().toInt()
             tab.scrollToCenter(position)
         }
+    }
+
+    companion object {
+        val demoItem = DemoItem("infinite",
+            R.string.infinite_demo_name,
+            R.string.infinite_demo_describe,
+            InfiniteTabActivity::class.java)
     }
 }
 

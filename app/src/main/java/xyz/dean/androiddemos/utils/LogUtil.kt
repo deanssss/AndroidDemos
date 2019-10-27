@@ -1,27 +1,9 @@
 package xyz.dean.androiddemos.utils
 
 import androidx.annotation.IntRange
-import android.util.Log
-import xyz.dean.androiddemos.BuildConfig
 import java.io.IOException
-import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
-
-//<editor-fold desc="Log Printer for Android" defaultstate="collapsed">
-val alogPrinter = object : LogPrinter() {
-    override fun printLog(logType: LogType, tag: String, msg: String, tr: Throwable?) {
-        when (logType) {
-            LogType.VERBOSE ->  if (tr != null) Log.v(tag, msg, tr) else Log.v(tag, msg)
-            LogType.DEBUG ->    if (tr != null) Log.d(tag, msg, tr) else Log.d(tag, msg)
-            LogType.INFO ->     if (tr != null) Log.i(tag, msg, tr) else Log.i(tag, msg)
-            LogType.WARNING ->  if (tr != null) Log.w(tag, msg, tr) else Log.w(tag, msg)
-            LogType.ERROR ->    if (tr != null) Log.e(tag, msg, tr) else Log.e(tag, msg)
-            LogType.ASSERT ->   if (tr != null) Log.wtf(tag, msg, tr) else Log.wtf(tag, msg)
-        }
-    }
-}
-//</editor-fold>
 
 //<editor-fold desc="Log Printer for Java Console." defaultstate="collapsed">
 val jlogPrinter = object : LogPrinter() {
@@ -186,18 +168,6 @@ abstract class LogPrinter {
         /** All priorities */
         const val ALL_LOGGABLE      = 0b0011_1111
 
-    }
-}
-
-/**
- * Default global log utils.
- */
-val log = Log().apply {
-    printer = alogPrinter
-    if (BuildConfig.DEBUG) {
-        printer.setLoggable(LogPrinter.ALL_LOGGABLE)
-    } else {
-        printer.setLoggable(LogPrinter.DEFAULT_LOGGABLE)
     }
 }
 
