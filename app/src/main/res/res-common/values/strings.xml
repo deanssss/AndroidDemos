@@ -3,4 +3,6 @@
     <string name="menu_go_home">返回主页</string>
     <string name="menu_first_load">设为首加载</string>
     <string name="menu_clear_first">清除首加载</string>
+    <string name="msg_set_first_load_success">设置首加载成功</string>
+    <string name="msg_clear_first_load_success">清除首加载成功</string>
 </resources>
