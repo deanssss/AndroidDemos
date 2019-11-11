@@ -1,0 +1,7 @@
+<resources>
+    <!-- Infinite List start -->
+    <string name="infinite_demo_name">无限循环RV</string>
+    <string name="infinite_demo_describe">一个真正的无限循环列表，通过RecyclerView的LayoutManager实现。</string>
+    <string name="infinite_et_position_hint">滚动到哪儿去？</string>
+    <!-- Infinite List end -->
+</resources>
