@@ -1,18 +1,13 @@
 package xyz.dean.androiddemos.demos.infinite_list
 
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import xyz.dean.androiddemos.common.log
 
 /**
  * 真-无限循环
  */
 class InfiniteLayoutManager : RecyclerView.LayoutManager() {
-    private val tag: String = this.javaClass.simpleName
     private var placedChildCount = 0
-    private var firstChild: View? =null
-    private var lastChild: View? = null
 
     override fun isAutoMeasureEnabled() = true
 
@@ -23,11 +18,9 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
     override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
         if (itemCount <= 0 ) return
         if (state.isPreLayout) return
-        log.d(tag, "on layout")
 
         detachAndScrapAttachedViews(recycler)
 
-        recycler.setViewCacheSize(30)
         initAdd(recycler, state)
     }
 
@@ -38,7 +31,7 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
         var leftStart = addStart
         var rightStart = addStart
 
-        // add center child
+        // add center child if exists.
         val centerPos = if((itemCount and 1) == 0) -1 else (itemCount - 1) / 2
         val centerView = if(centerPos == -1) null else recycler.getViewForPosition(centerPos)
         centerView?.let {
@@ -49,6 +42,7 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
             layoutDecorated(it, addStart - width / 2, 0, addStart + width, height)
 
             placedChildCount++
+
             leftStart -= width / 2
             rightStart += width / 2
         }
@@ -59,35 +53,11 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
             leftStartPos = prevChildPos(centerPos)
             rightStartPos = nextChildPos(centerPos)
         }
+
         // add left children
-        while (leftStart > -width && placedChildCount <= 30) {
-            val child = recycler.getViewForPosition(leftStartPos)
-            addView(child, 0)
-            measureChildWithMargins(child, 0, 0)
-            val width = getDecoratedMeasuredWidth(child)
-            val height = getDecoratedMeasuredHeight(child)
-            layoutDecorated(child, leftStart - width, 0, leftStart, height)
-
-            placedChildCount++
-            leftStart -= width
-            leftStartPos = prevChildPos(leftStartPos)
-            firstChild = child
-        }
-
+        addLeftChildren(leftStart, leftStartPos, recycler)
         // add right children
-        while (rightStart < width * 2 && placedChildCount <= 30) {
-            val child = recycler.getViewForPosition(rightStartPos)
-            addView(child)
-            measureChildWithMargins(child, 0, 0)
-            val width = getDecoratedMeasuredWidth(child)
-            val height = getDecoratedMeasuredHeight(child)
-            layoutDecorated(child, rightStart, 0, rightStart + width, height)
-
-            placedChildCount++
-            rightStart += width
-            rightStartPos = nextChildPos(rightStartPos)
-            lastChild = child
-        }
+        addRightChildren(rightStart, rightStartPos, recycler)
     }
 
     private fun prevChildPos(currentChildPos: Int): Int {
@@ -100,6 +70,40 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
         else currentChildPos + 1
     }
 
+    private fun addLeftChildren(startX: Int, startPos: Int, recycler: RecyclerView.Recycler) {
+        var leftStart = startX
+        var leftStartPos = startPos
+        while (leftStart > -width && placedChildCount <= 100) {
+            val child = recycler.getViewForPosition(leftStartPos)
+            addView(child, 0)
+            measureChildWithMargins(child, 0, 0)
+            val width = getDecoratedMeasuredWidth(child)
+            val height = getDecoratedMeasuredHeight(child)
+            layoutDecorated(child, leftStart - width, 0, leftStart, height)
+
+            placedChildCount++
+            leftStart -= width
+            leftStartPos = prevChildPos(leftStartPos)
+        }
+    }
+
+    private fun addRightChildren(startX: Int, startPos: Int, recycler: RecyclerView.Recycler) {
+        var rightStart = startX
+        var rightStartPos = startPos
+        while (rightStart < width * 2 && placedChildCount <= 100) {
+            val child = recycler.getViewForPosition(rightStartPos)
+            addView(child)
+            measureChildWithMargins(child, 0, 0)
+            val width = getDecoratedMeasuredWidth(child)
+            val height = getDecoratedMeasuredHeight(child)
+            layoutDecorated(child, rightStart, 0, rightStart + width, height)
+
+            placedChildCount++
+            rightStart += width
+            rightStartPos = nextChildPos(rightStartPos)
+        }
+    }
+
     override fun canScrollHorizontally(): Boolean = true
 
     override fun scrollHorizontallyBy(dx: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State): Int {
@@ -110,13 +114,6 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
     }
 
     private fun fill(dx: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State) {
-        log.d(tag, "dx: $dx scroll to left: ${dx > 0}")
-        val fiView = getChildAt(0)!!
-        val fiPos = getPosition(fiView)
-        log.d(tag, "current first pos: $fiPos current first left: ${fiView.left}")
-        val laView = getChildAt(itemCount - 1)!!
-        val laPos = getPosition(laView)
-        log.d(tag, "current last pos: $laPos current last right: ${laView.right}")
         recycleOut(dx, recycler, state)
 
         if (dx > 0) {
@@ -125,21 +122,9 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
             if (lastView != null) {
                 val lastPos = getPosition(lastView)
                 if (lastView.right - dx < width * 2) {
-                    var rightStart = lastView.right
-                    var rightStartPos = nextChildPos(lastPos)
-
-                    while (rightStart < width * 2 && placedChildCount <= 30) {
-                        val child = recycler.getViewForPosition(rightStartPos)
-                        addView(child)
-                        measureChildWithMargins(child, 0, 0)
-                        val width = getDecoratedMeasuredWidth(child)
-                        val height = getDecoratedMeasuredHeight(child)
-                        layoutDecorated(child, rightStart, 0, rightStart + width, height)
-
-                        placedChildCount++
-                        rightStart += width
-                        rightStartPos = nextChildPos(rightStartPos)
-                    }
+                    val rightStart = lastView.right
+                    val rightStartPos = nextChildPos(lastPos)
+                    addRightChildren(rightStart, rightStartPos, recycler)
                 }
             } else {
                 initAdd(recycler, state)
@@ -150,21 +135,9 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
             if (firstView != null) {
                 val firstPos = getPosition(firstView)
                 if (firstView.left - dx  > -width ) {
-                    var leftStart = firstView.left
-                    var leftStartPos = prevChildPos(firstPos)
-
-                    while (leftStart > -width && placedChildCount <= 30) {
-                        val child = recycler.getViewForPosition(leftStartPos)
-                        addView(child, 0)
-                        measureChildWithMargins(child, 0, 0)
-                        val width = getDecoratedMeasuredWidth(child)
-                        val height = getDecoratedMeasuredHeight(child)
-                        layoutDecorated(child, leftStart - width, 0, leftStart, height)
-
-                        placedChildCount++
-                        leftStart -= width
-                        leftStartPos = prevChildPos(leftStartPos)
-                    }
+                    val leftStart = firstView.left
+                    val leftStartPos = prevChildPos(firstPos)
+                    addLeftChildren(leftStart, leftStartPos, recycler)
                 }
             } else {
                 initAdd(recycler, state)

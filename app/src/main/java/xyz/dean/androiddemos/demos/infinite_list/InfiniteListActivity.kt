@@ -1,6 +1,7 @@
 package xyz.dean.androiddemos.demos.infinite_list
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +30,8 @@ class InfiniteTabActivity : BaseActivity() {
         }
 
         findViewById<Button>(R.id.bt_confirm).setOnClickListener {
-            val position = findViewById<EditText>(R.id.et_position).text.toString().toInt()
+            val str = findViewById<EditText>(R.id.et_position).text.toString()
+            val position = if (TextUtils.isEmpty(str)) 0 else str.toInt()
             tab.scrollToCenter(position)
         }
     }
