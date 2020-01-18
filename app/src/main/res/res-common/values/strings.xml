@@ -5,4 +5,8 @@
     <string name="menu_clear_first">清除首加载</string>
     <string name="msg_set_first_load_success">设置首加载成功</string>
     <string name="msg_clear_first_load_success">清除首加载成功</string>
+
+    <!-- Behavior Test -->
+    <string name="behavior_test_demo_name">Behavior</string>
+    <string name="behavior_test_describe">使用Behavior改变View大小的练习</string>
 </resources>
