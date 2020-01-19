@@ -31,19 +31,24 @@ class BehaviorTestActivity : BaseActivity() {
         val toolbar = findViewById<Toolbar>(R.id.behavior_toolbar)
         val rv = findViewById<RecyclerView>(R.id.behavior_rv)
 
-        var rvHeight = 0
-        appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, offset ->
-            log.d(tag, "offset: $offset rvHeight:$rvHeight")
-
-//            if (rvHeight == 0)rvHeight = rv.height
-//            rv.let {
-//                it.layoutParams.height = rvHeight + offset/2
-//                it.requestLayout()
-//            }
-        })
-
         toolbar.setTitle(R.string.behavior_test_demo_name)
         setSupportActionBar(toolbar)
+
+        var rvHeight = 0
+        appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, offset ->
+            log.d(tag, "offset: $offset rvHeight: $rvHeight rv.height: ${rv.height}")
+
+            if (rvHeight <= 0) {
+                rvHeight = rv.height - appBarLayout.height
+            }
+
+            if (rvHeight > 0) {
+                rv.let {
+                    it.layoutParams.height = rvHeight - offset
+                    it.requestLayout()
+                }
+            }
+        })
 
         rv.apply {
             layoutManager = LinearLayoutManager(this@BehaviorTestActivity).apply {
