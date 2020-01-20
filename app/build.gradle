@@ -18,14 +18,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    sourceSets {
-        main {
-            file('src/main/res')
-                    .listFiles()
-                    .each { res.srcDirs += it.path }
-        }
-    }
 }
 
 dependencies {

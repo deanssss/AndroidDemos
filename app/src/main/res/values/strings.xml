@@ -1,0 +1,32 @@
+<resources>
+
+    <!-- Common start -->
+    <string name="app_name">AndroidDemos</string>
+    <string name="common_submit_txt">提交</string>
+    <!-- Common end -->
+
+    <!-- Main start -->
+    <string name="menu_go_home">返回主页</string>
+    <string name="menu_first_load">设为首加载</string>
+    <string name="menu_clear_first">清除首加载</string>
+    <string name="msg_set_first_load_success">设置首加载成功</string>
+    <string name="msg_clear_first_load_success">清除首加载成功</string>
+    <!-- Main end -->
+
+    <!-- Sample Demo start -->
+    <string name="sample_demo_name">示例</string>
+    <string name="sample_describe_text">只是一个简单的示例。</string>
+    <!-- Sample Demo end -->
+
+    <!-- Infinite List start -->
+    <string name="infinite_demo_name">无限循环RV</string>
+    <string name="infinite_demo_describe">一个真正的无限循环列表，通过RecyclerView的LayoutManager实现。</string>
+    <string name="infinite_et_position_hint">滚动到哪儿去？</string>
+    <!-- Infinite List end -->
+
+    <!-- Behavior Test start -->
+    <string name="behavior_test_demo_name">Behavior</string>
+    <string name="behavior_test_describe">使用Behavior改变View大小的练习</string>
+    <!-- Behavior Test end -->
+
+</resources>
