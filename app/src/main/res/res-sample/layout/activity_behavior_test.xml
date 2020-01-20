@@ -11,16 +11,19 @@
         android:id="@+id/behavior_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/behavior_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"/>
+            android:layout_height="?actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"/>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:layout_behavior=".demos.behavior.AdjustViewSizeWhenScrollingBehavior">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/behavior_rv"
@@ -37,6 +40,7 @@
             android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="@id/behavior_rv"
             app:layout_constraintEnd_toEndOf="@id/behavior_rv" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
