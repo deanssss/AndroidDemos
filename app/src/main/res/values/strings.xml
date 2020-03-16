@@ -29,4 +29,8 @@
     <string name="behavior_test_describe">使用Behavior改变View大小的练习</string>
     <!-- Behavior Test end -->
 
+    <!-- OKHttp Cache Start -->
+    <string name="okhttp_cache_demo_name">OKHttp缓存</string>
+    <string name="okhttp_cache_demo_describe">使用OKHttp为WebView实现自定义缓存</string>
+    <!-- OKHttp Cache End -->
 </resources>
