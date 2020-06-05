@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "395593966390",
+    "firebase_url": "https://androiddemos-da59e.firebaseio.com",
+    "project_id": "androiddemos-da59e",
+    "storage_bucket": "androiddemos-da59e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395593966390:android:246b547580cb7a28af8997",
+        "android_client_info": {
+          "package_name": "xyz.dean.androiddemos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395593966390-8i4e50a28io1mlau0nbqihjb708d04j4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.dean.androiddemos",
+            "certificate_hash": "5da02c5aa89405c32abdefbc90b06ab6011a64ec"
+          }
+        },
+        {
+          "client_id": "395593966390-97q8scd0ck9cgsn7c6l92gl8n9gpctb4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.dean.androiddemos",
+            "certificate_hash": "7957a3594b1efb1a94c709696f29a0056738ffa4"
+          }
+        },
+        {
+          "client_id": "395593966390-8gqa2547bu5s5mi4tge729em58jf9o49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNqKoarArCY0DV7eEWPuFdXM5kNa84tWw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395593966390-8gqa2547bu5s5mi4tge729em58jf9o49.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
