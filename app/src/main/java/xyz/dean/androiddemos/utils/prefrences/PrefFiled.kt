@@ -1,57 +1,64 @@
 package xyz.dean.androiddemos.utils.prefrences
 
-import kotlin.properties.ReadWriteProperty
+import android.annotation.SuppressLint
+import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import kotlin.reflect.KProperty
 
 abstract class PrefFiled<T>
 internal constructor(
-        val key: String? = null,
-        val default: T,
-        val useName: Boolean = !key.isNullOrBlank()
-) : ReadWriteProperty<Any?, T> {
+        private val key: String? = null,
+        protected var default: T,
+        private val useCommit: Boolean = false,
+        private val writer: Editor.(String, T?) -> Editor,
+        private val reader: SharedPreferences.(String) -> T?
+) {
+    private val provideKey: Boolean = !key.isNullOrBlank()
 
-    abstract fun getValue(property: KProperty<*>, prefModel: PrefModel): T
-    abstract fun setValue(property: KProperty<*>, prefModel: PrefModel, value: T)
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        val pref = (thisRef as PrefModel).getPreference()
+        val key = if (provideKey) key else property.name
+        return pref.reader(key!!) ?: default
+    }
 
-    override operator fun getValue(thisRef: Any?, property: KProperty<*>): T = getValue(property, thisRef as PrefModel)
-    override operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) = setValue(property, thisRef as PrefModel, value)
+    @SuppressLint("ApplySharedPref")
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
+        val editor = (thisRef as PrefModel).getPreference().edit()
+        val key = if (provideKey) key else property.name
+
+        editor.writer(key!!, value)
+
+        if (useCommit) editor.commit()
+        else editor.apply()
+    }
 }
 
 class IntPrefField
-internal constructor(
-        key: String?, default: Int
-) : PrefFiled<Int>(key, default) {
-
-    override fun getValue(property: KProperty<*>, prefModel: PrefModel): Int {
-        val pref = prefModel.getPreference()
-        val key = if (useName) key else property.name
-
-        return pref.getInt(key, default)
-    }
-
-    override fun setValue(property: KProperty<*>, prefModel: PrefModel, value: Int) {
-        val editor = prefModel.getPreference().edit()
-        val key = if (useName) key else property.name
-
-        return editor.putInt(key, value).apply()
+constructor(
+        key: String?, default: Int?
+) : PrefFiled<Int?>(
+        key, default,
+        writer = { k, v -> if (v != null) putInt(k, v) else remove(k) },
+        reader = { k -> if (contains(k)) getInt(k, 0) else null }
+) {
+    internal fun noNull(default: Int): PrefFiled<Int> {
+        this.default = default
+        @Suppress("UNCHECKED_CAST")
+        return this as PrefFiled<Int>
     }
 }
 
 class StringPrefFiled
 internal constructor(
         key: String?, default: String?
-) : PrefFiled<String?>(key, default) {
-    override fun getValue(property: KProperty<*>, prefModel: PrefModel): String? {
-        val pref = prefModel.getPreference()
-        val key = if (useName) key else property.name
-
-        return pref.getString(key, default)
-    }
-
-    override fun setValue(property: KProperty<*>, prefModel: PrefModel, value: String?) {
-        val editor = prefModel.getPreference().edit()
-        val key = if (useName) key else property.name
-
-        return editor.putString(key, value).apply()
+) : PrefFiled<String?>(
+        key, default,
+        writer = { k, v -> if (v != null ) putString(k, v) else remove(k) },
+        reader = { k -> getString(k, null) }
+) {
+    internal fun noNull(default: String): PrefFiled<String> {
+        this.default = default
+        @Suppress("UNCHECKED_CAST")
+        return this as PrefFiled<String>
     }
 }
