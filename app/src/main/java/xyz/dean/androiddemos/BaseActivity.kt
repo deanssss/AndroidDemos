@@ -8,9 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import xyz.dean.androiddemos.common.SP_KEY_FIRST_LOAD
-import xyz.dean.androiddemos.common.SP_NAME_MAIN
 import xyz.dean.androiddemos.common.log
+import xyz.dean.androiddemos.model.MainPrefModel
 
 abstract class BaseActivity : AppCompatActivity() {
     open val tag: String = this.javaClass.simpleName
@@ -82,15 +81,12 @@ abstract class BaseActivity : AppCompatActivity() {
             R.id.menu_first_load -> {
                 val demoItem = getDemoItem()
                 if (demoItem != null) {
-                    val spf = getSharedPreferences(SP_NAME_MAIN, Context.MODE_PRIVATE)
-                    spf.edit().putString(SP_KEY_FIRST_LOAD, demoItem.key)
-                        .apply()
+                    MainPrefModel.last = demoItem.key
                     Toast.makeText(this, getString(R.string.msg_set_first_load_success), Toast.LENGTH_SHORT).show()
                 }
             }
             R.id.menu_clear_first -> {
-                val spf = getSharedPreferences(SP_NAME_MAIN, Context.MODE_PRIVATE)
-                spf.edit().remove(SP_KEY_FIRST_LOAD).apply()
+                MainPrefModel.remove(MainPrefModel::last)
                 Toast.makeText(this, getString(R.string.msg_set_first_load_success), Toast.LENGTH_SHORT).show()
             }
         }

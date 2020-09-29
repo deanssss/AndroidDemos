@@ -15,6 +15,7 @@ abstract class PrefModel(
     }
 
     fun getPreference() = preferences
+
     @SuppressLint("ApplySharedPref")
     fun clear(isCommit: Boolean = false) {
         val editor = preferences.edit().clear()
@@ -23,8 +24,14 @@ abstract class PrefModel(
         else editor.commit()
     }
 
+    /**
+     * Call this method to remove the SharedPreferences data,
+     * The non-null Pref field cannot be removed by assign to null,
+     * but you can use this method to remove it.
+     */
     fun remove(property: KProperty<*>, isCommit: Boolean = false) {
-        val editor = preferences.edit().remove(property.name)
+        val key = PrefFiled.getKey(property)
+        val editor = preferences.edit().remove(key)
 
         if (isCommit) editor.apply()
         else editor.commit()

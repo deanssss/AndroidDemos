@@ -1,11 +1,11 @@
 package xyz.dean.androiddemos.utils.prefrences
 
 @Suppress("unused")
-fun PrefModel.intFiled(key: String? = null, default: Int) = IntPrefField(key, default).noNull(default)
+fun PrefModel.intFiled(default: Int) = IntPrefField(default).noNull(default)
 @Suppress("unused")
-fun PrefModel.nullableIntFiled(key: String? = null, default: Int? = null) = IntPrefField(key, default)
+fun PrefModel.nullableIntFiled(default: Int? = null) = IntPrefField(default)
 
 @Suppress("unused")
-fun PrefModel.stringFiled(key: String? = null, default: String) = StringPrefFiled(key, default).noNull(default)
+fun PrefModel.stringFiled(default: String) = StringPrefFiled(default).noNull(default)
 @Suppress("unused")
-fun PrefModel.nullableStringFiled(key: String? = null, default: String? = null) = StringPrefFiled(key, default)
+fun PrefModel.nullableStringFiled(default: String? = null) = StringPrefFiled(default)
