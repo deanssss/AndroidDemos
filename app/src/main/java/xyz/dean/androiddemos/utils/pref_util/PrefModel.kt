@@ -1,4 +1,4 @@
-package xyz.dean.androiddemos.utils.prefrences
+package xyz.dean.androiddemos.utils.pref_util
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -47,7 +47,7 @@ abstract class PrefModel(
 
     /**
      * Call this method to remove the SharedPreferences data,
-     * The non-null Pref field cannot be removed by assign to null,
+     * The non-null Pref property cannot be removed by assign to null,
      * but you can use this method to remove it.
      */
     fun remove(property: KProperty<*>, isCommit: Boolean = false) {
@@ -60,5 +60,11 @@ abstract class PrefModel(
 
     internal fun getKey(property: KProperty<*>): String {
         return keyMap[property.name] ?: property.name
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> PrefField<T?>.noNull(default: T): PrefField<T> {
+        this.default = default
+        return this as PrefField<T>
     }
 }
