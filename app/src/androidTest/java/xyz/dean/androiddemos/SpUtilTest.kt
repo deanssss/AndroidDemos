@@ -15,13 +15,17 @@ class SpUtilTest {
         val appContext = ApplicationProvider.getApplicationContext<Context>()
 
         val spModel = object : PrefModel("test", Context.MODE_PRIVATE, { appContext }) {
-            @Key("student") var name1: String by stringFiled(default = "zhangsan")
+            var name1: String by stringFiled(default = "zhangsan")
             var name2: String? by nullableStringFiled()
             var name3: String? by nullableStringFiled(default = "wangwu")
 
             var age1: Int by intFiled(default = 23)
             var age2: Int? by nullableIntFiled()
             var age3: Int? by nullableIntFiled(default = 24)
+
+            override fun setAlias() {
+                ::name1 alias "student"
+            }
         }
 
         Assert.assertEquals(spModel.name1, "zhangsan")

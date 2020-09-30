@@ -5,11 +5,6 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import kotlin.reflect.KProperty
 
-@Target(AnnotationTarget.PROPERTY)
-@Retention(AnnotationRetention.RUNTIME)
-@MustBeDocumented
-annotation class Key(val name: String)
-
 abstract class PrefFiled<T>
 internal constructor(
         protected var default: T,
@@ -20,31 +15,25 @@ internal constructor(
     private lateinit var cachedKey: String
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        val pref = (thisRef as PrefModel).getPreference()
+        thisRef as PrefModel
+        val pref = thisRef.getPreference()
         if (!::cachedKey.isInitialized)
-            cachedKey = getKey(property)
+            cachedKey = thisRef.getKey(property)
 
         return pref.reader(cachedKey) ?: default
     }
 
     @SuppressLint("ApplySharedPref")
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
-        val editor = (thisRef as PrefModel).getPreference().edit()
+        thisRef as PrefModel
+        val editor = thisRef.getPreference().edit()
         if (!::cachedKey.isInitialized)
-            cachedKey = getKey(property)
+            cachedKey = thisRef.getKey(property)
 
         editor.writer(cachedKey, value)
 
         if (useCommit) editor.commit()
         else editor.apply()
-    }
-
-    companion object {
-        internal fun getKey(property: KProperty<*>): String {
-            // TODO 用反射解决了一个小问题，有点难受...
-            val keyAnnotation = property.annotations.filterIsInstance<Key>().firstOrNull()
-            return keyAnnotation?.name ?: property.name
-        }
     }
 }
 
@@ -54,9 +43,9 @@ constructor(default: Int?) : PrefFiled<Int?>(
         writer = { k, v -> if (v != null) putInt(k, v) else remove(k) },
         reader = { k -> if (contains(k)) getInt(k, 0) else null }
 ) {
+    @Suppress("UNCHECKED_CAST")
     internal fun noNull(default: Int): PrefFiled<Int> {
         this.default = default
-        @Suppress("UNCHECKED_CAST")
         return this as PrefFiled<Int>
     }
 }
@@ -67,9 +56,9 @@ internal constructor(default: String?) : PrefFiled<String?>(
         writer = { k, v -> if (v != null ) putString(k, v) else remove(k) },
         reader = { k -> getString(k, null) }
 ) {
+    @Suppress("UNCHECKED_CAST")
     internal fun noNull(default: String): PrefFiled<String> {
         this.default = default
-        @Suppress("UNCHECKED_CAST")
         return this as PrefFiled<String>
     }
 }

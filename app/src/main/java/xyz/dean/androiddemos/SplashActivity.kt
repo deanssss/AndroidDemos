@@ -13,10 +13,9 @@ class SplashActivity : BaseActivity() {
 
         val firstLoadKey = MainPrefModel.last
         log.d(tag, "first load: $firstLoadKey")
-        val clazz = demos[firstLoadKey]?.clazz ?: MainActivity::class.java
-        val intent = Intent(this, clazz)
         Handler().postDelayed({
-            startActivity(intent)
+            val clazz = demos[firstLoadKey]?.clazz ?: MainActivity::class.java
+            startActivity(Intent(this, clazz))
         }, DELAY_TIME)
     }
 
