@@ -52,54 +52,152 @@ class SpUtilTest {
 
     @Test
     fun useAppContext() {
-        Assert.assertEquals(spModel.string1, "zhangsan")
-        Assert.assertEquals(spModel.string2, null)
-        Assert.assertEquals(spModel.string3, "wangwu")
+        spModel.run {
+            Assert.assertEquals(string1, "zhangsan")
+            Assert.assertEquals(string2, null)
+            Assert.assertEquals(string3, "wangwu")
 
-        Assert.assertEquals(spModel.int1, 23)
-        Assert.assertEquals(spModel.int2, null)
-        Assert.assertEquals(spModel.int3, 24)
+            Assert.assertEquals(int1, 23)
+            Assert.assertEquals(int2, null)
+            Assert.assertEquals(int3, 24)
 
-        Assert.assertTrue(spModel.strSet1.isEmpty())
-        Assert.assertTrue(spModel.strSet2 == null)
-        Assert.assertTrue(spModel.strSet3?.first() == "default")
+            Assert.assertTrue(strSet1.isEmpty())
+            Assert.assertTrue(strSet2 == null)
+            Assert.assertTrue(strSet3?.first() == "default")
+
+            Assert.assertEquals(long1, 0L)
+            Assert.assertEquals(long2, null)
+            Assert.assertEquals(long3, 0L)
+
+            Assert.assertEquals(float1, 0f)
+            Assert.assertEquals(float2, null)
+            Assert.assertEquals(float3, 0f)
+
+            Assert.assertEquals(boolean1, false)
+            Assert.assertEquals(boolean2, null)
+            Assert.assertEquals(boolean3, false)
+        }
 
         // write
-        spModel.string1 = "zhangsan1"
-        Assert.assertEquals(spModel.string1, "zhangsan1")
-        spModel.string2 = "lisi"
-        Assert.assertEquals(spModel.string2, "lisi")
-        spModel.string3 = "wangwu1"
-        Assert.assertEquals(spModel.string3, "wangwu1")
+        spModel.run {
+            string1 = "zhangsan1"
+            Assert.assertEquals(string1, "zhangsan1")
+            string2 = "lisi"
+            Assert.assertEquals(string2, "lisi")
+            string3 = "wangwu1"
+            Assert.assertEquals(string3, "wangwu1")
+        }
 
-        spModel.int1 = 24
-        Assert.assertEquals(spModel.int1, 24)
-        spModel.int2 = 20
-        Assert.assertEquals(spModel.int2, 20)
-        spModel.int3 = 25
-        Assert.assertEquals(spModel.int3, 25)
+        spModel.run {
+            int1 = 24
+            Assert.assertEquals(int1, 24)
+            int2 = 20
+            Assert.assertEquals(int2, 20)
+            int3 = 25
+            Assert.assertEquals(int3, 25)
+        }
+
+        spModel.run {
+            strSet1 = setOf("one", "two", "three")
+            Assert.assertTrue(strSet1.size == 3)
+            strSet2 = setOf("one", "two", "three")
+            Assert.assertTrue(strSet2?.size == 3)
+            strSet3 = setOf("one", "two", "three")
+            Assert.assertTrue(strSet3?.size == 3)
+        }
+
+        spModel.run {
+            long1 = 9999999999L
+            Assert.assertEquals(long1, 9999999999L)
+            long2 = 9999999999L
+            Assert.assertEquals(long2!!, 9999999999L)
+            long3 = 9999999999L
+            Assert.assertEquals(long3!!, 9999999999L)
+        }
+
+        spModel.run {
+            float1 = 3.1415926f
+            Assert.assertEquals(float1, 3.1415926f)
+            float2 = 3.1415926f
+            Assert.assertEquals(float2, 3.1415926f)
+            float3 = 3.1415926f
+            Assert.assertEquals(float3, 3.1415926f)
+        }
+
+        spModel.run {
+            boolean1 = true
+            Assert.assertEquals(boolean1, true)
+            boolean2 = true
+            Assert.assertEquals(boolean2, true)
+            boolean3 = true
+            Assert.assertEquals(boolean3, true)
+        }
 
         // remove
-        spModel.remove(spModel::string1)
-        Assert.assertEquals(spModel.string1, "zhangsan")
-        spModel.string2 = null
-        Assert.assertTrue(spModel.string2 == null)
-        spModel.string3 = null
-        Assert.assertEquals(spModel.string3, "wangwu")
+        spModel.run {
+            remove(::string1)
+            Assert.assertEquals(string1, "zhangsan")
+            string2 = null
+            Assert.assertTrue(string2 == null)
+            // Interesting...
+            // Assert.assertEquals(string2, null)
+            string3 = null
+            Assert.assertEquals(string3, "wangwu")
+        }
 
-        spModel.remove(spModel::int1)
-        Assert.assertEquals(spModel.int1, 23)
-        spModel.int2 = null
-        Assert.assertTrue(spModel.int2 == null)
-        spModel.int3 = null
-        Assert.assertEquals(spModel.int3, 24)
+        spModel.run {
+            remove(::int1)
+            Assert.assertEquals(int1, 23)
+            int2 = null
+            Assert.assertTrue(int2 == null)
+            // Assert.assertEquals(int2, null)
+            int3 = null
+            Assert.assertEquals(int3, 24)
+        }
 
-        // clear
-        spModel.clear()
+        spModel.run {
+            remove(::strSet1)
+            Assert.assertTrue(strSet1.isEmpty())
+            strSet2 = null
+            Assert.assertTrue(strSet2 == null)
+            strSet3 = null
+            Assert.assertTrue(strSet3?.first() == "default")
+        }
+
+        spModel.run {
+            remove(::long1)
+            Assert.assertEquals(long1, 0L)
+            long2 = null
+            Assert.assertTrue(long2 == null)
+            // Assert.assertEquals(long2, null)
+            long3 = null
+            Assert.assertEquals(long3, 0L)
+        }
+
+        spModel.run {
+            remove(::float1)
+            Assert.assertEquals(float1, 0f)
+            float2 = null
+            Assert.assertTrue(float2 == null)
+            // Assert.assertEquals(float2, null)
+            float3 = null
+            Assert.assertEquals(float3, 0f)
+        }
+
+        spModel.run {
+            remove(::boolean1)
+            Assert.assertEquals(boolean1, false)
+            boolean2 = null
+            Assert.assertTrue(boolean2 == null)
+            // Assert.assertEquals(boolean2, null)
+            boolean3 = null
+            Assert.assertEquals(boolean3, false)
+        }
     }
 
     @After
     fun clear() {
-
+        // clear
+        spModel.clear()
     }
 }
