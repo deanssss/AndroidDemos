@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package xyz.dean.androiddemos.utils
 
 import androidx.annotation.IntRange
@@ -61,7 +63,7 @@ val jlogPrinter = object : LogPrinter() {
 //</editor-fold>
 
 class Log {
-    var printer: LogPrinter = jlogPrinter
+    var printers: MutableList<LogPrinter> = mutableListOf()
     var tagFilter: (String) -> Boolean = { true }
 
     fun v(tag: String, tr: Throwable? = null, msg: () -> String)
@@ -101,8 +103,10 @@ class Log {
             = log(LogPrinter.LogType.ASSERT, tag, msg, tr)
 
     private fun log(type: LogPrinter.LogType, tag: String, msg: String, tr: Throwable? = null) {
-        if (printer.shouldLog(type) && tagFilter.invoke(tag)) {
-            printer.printLog(type, tag, msg, tr)
+        printers.forEach { printer ->
+            if (printer.shouldLog(type) && tagFilter.invoke(tag)) {
+                printer.printLog(type, tag, msg, tr)
+            }
         }
     }
 }
@@ -175,7 +179,8 @@ abstract class LogPrinter {
 fun main() {
     val log = Log()
 
-    log.printer.setLoggable(0b0011_1111)
+    jlogPrinter.setLoggable(0b0011_1111)
+    log.printers.add(jlogPrinter)
     log.tagFilter = { it != "Deab" }
 
     log.v("Dean", "Verbose log msg.")

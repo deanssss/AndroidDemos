@@ -24,10 +24,10 @@ val alogPrinter = object : LogPrinter() {
  * Default global log utils.
  */
 val log = Log().apply {
-    printer = alogPrinter
     if (BuildConfig.DEBUG) {
-        printer.setLoggable(LogPrinter.ALL_LOGGABLE)
+        alogPrinter.setLoggable(LogPrinter.ALL_LOGGABLE)
     } else {
-        printer.setLoggable(LogPrinter.DEFAULT_LOGGABLE)
+        alogPrinter.setLoggable(LogPrinter.DEFAULT_LOGGABLE)
     }
+    printers.add(alogPrinter)
 }
