@@ -1,17 +1,13 @@
-package xyz.dean.androiddemos.utils.reactivex
+package xyz.dean.androiddemos.utils.reactivex.transformer
 
 import io.reactivex.*
 import org.reactivestreams.Publisher
 
-class SwitchTransformer<T> internal constructor(
+internal class SwitchTransformer<T> constructor(
     private val subscribeOn: Scheduler,
     private val observableOn: Scheduler
-) : ObservableTransformer<T, T>,
-    FlowableTransformer<T, T>,
-    SingleTransformer<T, T>,
-    MaybeTransformer<T, T>,
-    CompletableTransformer
-{
+) : ComposeTransformer<T> {
+
     override fun apply(upstream: Observable<T>): ObservableSource<T> {
         return upstream.subscribeOn(subscribeOn)
             .observeOn(observableOn)
