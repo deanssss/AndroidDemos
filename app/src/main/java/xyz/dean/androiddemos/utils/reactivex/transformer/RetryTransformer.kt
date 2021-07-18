@@ -1,25 +1,21 @@
-package xyz.dean.androiddemos.utils.reactivex
+package xyz.dean.androiddemos.utils.reactivex.transformer
 
 import io.reactivex.*
 import org.reactivestreams.Publisher
+import xyz.dean.androiddemos.utils.reactivex.log
 import java.util.concurrent.atomic.AtomicInteger
 
-class RetryTransformer<T> internal constructor(
+internal class RetryTransformer<T> constructor(
     private val maxRetryTimes: Int,
     private val onPreRetry: (Throwable) -> Completable,
     private val tag: String
-) : ObservableTransformer<T, T>,
-    FlowableTransformer<T, T>,
-    SingleTransformer<T, T>,
-    MaybeTransformer<T, T>,
-    CompletableTransformer
-{
+) : ComposeTransformer<T> {
     private val retryCount: AtomicInteger = AtomicInteger()
 
     private fun handleRetry(error: Throwable): Single<Unit> {
         return if (retryCount.incrementAndGet() <= maxRetryTimes) {
             onPreRetry(error)
-                .doOnComplete { log.w(tag, "Retry stream with exception: ${error.message}") }
+                .doOnComplete { log.w(tag, "Retry stream with exception: ${error.message}, Retry times: ${retryCount.get()}.") }
                 .andThen(Single.just(Unit))
         } else {
             Single.error(error)
