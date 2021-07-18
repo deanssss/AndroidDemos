@@ -42,19 +42,18 @@ dependencies {
     implementation deps.androidx.recyclerview
 
     // ReactiveX libs
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
-    implementation deps.rx.rxjava
+    implementation deps.rx.rxkotlin
     implementation deps.rx.rxandroid
 
     // Okhttp
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.4.0'
+    implementation deps.square.okhttp
+    implementation deps.square.okhttp_logger
 
     // Google libs
     implementation deps.google.material
     implementation deps.google.firebase_core
     implementation deps.google.firebase_analytics
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation deps.google.gson
 
     // Test libs
     testImplementation deps.test.junit
