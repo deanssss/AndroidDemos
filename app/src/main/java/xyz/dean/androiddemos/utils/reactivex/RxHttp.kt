@@ -32,7 +32,7 @@ object RxHttp {
     }.onFailure { log.e("RxHttp", "Create SSLSocketFactory failed!", it) }
             .getOrDefault(null)
 
-    private val debugOrStaging = BuildConfig.DEBUG || "staging" == BuildConfig.FLAVOR
+    private val debugOrStaging = BuildConfig.DEBUG
     private val releaseOkHttpClient: OkHttpClient = OkHttpClient.Builder().build()
     private val debugOkHttpClient: OkHttpClient = OkHttpClient.Builder().applyDebugSettings().build()
     private val defaultOkHttpClient = if (debugOrStaging) debugOkHttpClient else releaseOkHttpClient
@@ -96,7 +96,7 @@ object RxHttp {
         if (unsafeSSLSocketFactory != null) {
             sslSocketFactory(unsafeSSLSocketFactory, unsafeManager)
         }
-        hostnameVerifier(HostnameVerifier { _, _ -> true })
+        hostnameVerifier { _, _ -> true }
         return this
     }
 

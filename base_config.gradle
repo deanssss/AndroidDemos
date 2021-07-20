@@ -24,7 +24,7 @@ ext {
 
     // Classpath
     kotlin_gradle_ver = '1.5.20'
-    android_gradle_ver = '3.6.4'
+    android_gradle_ver = '4.2.1'
     google_service_gradle_ver = '4.3.8'
 
     deps = [:]
