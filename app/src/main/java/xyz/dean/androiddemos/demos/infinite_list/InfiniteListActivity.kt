@@ -61,5 +61,5 @@ private class RAdapter(val datas: List<String>,val recyclerView: ScrollCenterRec
         }
     }
 
-    private class VH(view: View) : RecyclerView.ViewHolder(view)
+    class VH(view: View) : RecyclerView.ViewHolder(view)
 }

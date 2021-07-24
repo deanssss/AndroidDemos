@@ -1,19 +1,18 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'com.google.gms.google-services'
 }
 
 android {
     rootProject.apply(delegate, rootProject.compileConfig)
 
     defaultConfig {
-        applicationId "xyz.dean.androiddemos"
         rootProject.apply(delegate, rootProject.sdkConfig)
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -22,47 +21,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    lintOptions {
-        // 如果为 true，则当lint发现错误时停止 gradle构建 (默认为true)
-        abortOnError false
-    }
-
-    buildFeatures {
-        dataBinding true
-    }
 }
 
 dependencies {
     def deps = rootProject.deps
 
-    implementation project(':util')
-
-    // Kotlin language support
     implementation deps.kotlin.stadlib_jdk7
     implementation deps.kotlin.reflect
 
-    // AndroidX libs
     implementation deps.androidx.appcompat
     implementation deps.androidx.core_ktx
-    implementation deps.androidx.constraintlayout
-    implementation deps.androidx.recyclerview
 
-    // ReactiveX libs
+    implementation deps.google.gson
+
     implementation deps.rx.rxkotlin
     implementation deps.rx.rxandroid
 
-    // Okhttp
     implementation deps.square.okhttp
     implementation deps.square.okhttp_logger
 
-    // Google libs
-    implementation deps.google.material
-    implementation deps.google.firebase_core
-    implementation deps.google.firebase_analytics
-    implementation deps.google.gson
-
-    // Test libs
     testImplementation deps.test.junit
     androidTestImplementation deps.test.androidx.runner
     androidTestImplementation deps.test.androidx.espresso_core

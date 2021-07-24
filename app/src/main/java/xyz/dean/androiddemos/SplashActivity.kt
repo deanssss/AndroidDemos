@@ -3,6 +3,7 @@ package xyz.dean.androiddemos
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import xyz.dean.androiddemos.common.log
 import xyz.dean.androiddemos.model.MainPrefModel
 
@@ -13,7 +14,7 @@ class SplashActivity : BaseActivity() {
 
         val firstLoadKey = MainPrefModel.last
         log.d(tag, "first load: $firstLoadKey")
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             val clazz = demos[firstLoadKey]?.clazz ?: MainActivity::class.java
             startActivity(Intent(this, clazz))
         }, DELAY_TIME)

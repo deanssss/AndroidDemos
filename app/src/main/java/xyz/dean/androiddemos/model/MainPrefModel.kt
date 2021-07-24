@@ -2,8 +2,8 @@ package xyz.dean.androiddemos.model
 
 import android.content.Context
 import xyz.dean.androiddemos.MyApplication
-import xyz.dean.androiddemos.utils.pref_util.PrefModel
-import xyz.dean.androiddemos.utils.pref_util.stringField
+import xyz.dean.util.pref.PrefModel
+import xyz.dean.util.pref.stringField
 
 private const val SP_NAME_MAIN = "main"
 

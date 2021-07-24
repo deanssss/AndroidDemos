@@ -49,5 +49,5 @@ private class PracticeListAdapter(private val practiceList: List<DemoItem>) : Re
         }
     }
 
-    private class VH(view: View) : RecyclerView.ViewHolder(view)
+    class VH(view: View) : RecyclerView.ViewHolder(view)
 }

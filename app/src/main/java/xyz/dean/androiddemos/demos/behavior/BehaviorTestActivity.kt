@@ -13,7 +13,6 @@ import com.google.android.material.appbar.AppBarLayout
 import xyz.dean.androiddemos.BaseActivity
 import xyz.dean.androiddemos.DemoItem
 import xyz.dean.androiddemos.R
-import xyz.dean.androiddemos.common.log
 import java.util.*
 import kotlin.random.Random
 
@@ -108,7 +107,7 @@ private class RandomAdapter(val size: Int) : RecyclerView.Adapter<RandomAdapter.
         holder.itemView.setBackgroundColor(backgroundColor)
     }
 
-    private class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         lateinit var textView: TextView
     }
 

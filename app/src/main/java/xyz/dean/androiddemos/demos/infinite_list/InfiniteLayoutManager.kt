@@ -21,10 +21,10 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
 
         detachAndScrapAttachedViews(recycler)
 
-        initAdd(recycler, state)
+        initAdd(recycler)
     }
 
-    private fun initAdd(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+    private fun initAdd(recycler: RecyclerView.Recycler) {
         placedChildCount = 0
         val addStart = width / 2
 
@@ -107,14 +107,14 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
     override fun canScrollHorizontally(): Boolean = true
 
     override fun scrollHorizontallyBy(dx: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State): Int {
-        fill(dx, recycler, state)
+        fill(dx, recycler)
         offsetChildrenHorizontal(-1 * dx)
 
         return dx
     }
 
-    private fun fill(dx: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State) {
-        recycleOut(dx, recycler, state)
+    private fun fill(dx: Int, recycler: RecyclerView.Recycler) {
+        recycleOut(dx, recycler)
 
         if (dx > 0) {
             // scroll to left, add child behind the last child.
@@ -127,7 +127,7 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
                     addRightChildren(rightStart, rightStartPos, recycler)
                 }
             } else {
-                initAdd(recycler, state)
+                initAdd(recycler)
             }
         } else {
             // scroll to right, add child before the first child.
@@ -140,12 +140,12 @@ class InfiniteLayoutManager : RecyclerView.LayoutManager() {
                     addLeftChildren(leftStart, leftStartPos, recycler)
                 }
             } else {
-                initAdd(recycler, state)
+                initAdd(recycler)
             }
         }
     }
 
-    private fun recycleOut(dx: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+    private fun recycleOut(dx: Int, recycler: RecyclerView.Recycler) {
         if (dx > 0) {
             // scroll to left, remove the view in left.
             for (i in 0 until childCount) {
