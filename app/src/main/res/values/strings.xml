@@ -29,4 +29,7 @@
     <string name="behavior_test_describe">使用Behavior改变View大小的练习</string>
     <!-- Behavior Test end -->
 
+    <!-- Drag List Start -->
+    <string name="drag_list_demo_name">Drag List</string>
+    <string name="drag_list_describe">一个可以拖拽移动的分组列表</string>
 </resources>

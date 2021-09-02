@@ -11,7 +11,7 @@ buildscript {
         //noinspection GradleDependency: Limited the minimum version of AndroidStudio.
         classpath "com.android.tools.build:gradle:$android_gradle_ver"
         classpath "com.google.gms:google-services:$google_service_gradle_ver"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_gradle_ver"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30"
     }
 }
 
