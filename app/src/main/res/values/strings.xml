@@ -29,4 +29,8 @@
     <string name="behavior_test_describe">使用Behavior改变View大小的练习</string>
     <!-- Behavior Test end -->
 
+    <!-- Blur Image Start -->
+    <string name="blur_image_demo_name">毛玻璃</string>
+    <string name="blur_image_describe">RenderScript实现毛玻璃效果</string>
+    <!-- Blur Image End -->
 </resources>
