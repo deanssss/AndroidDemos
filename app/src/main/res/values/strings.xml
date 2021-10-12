@@ -32,5 +32,12 @@
     <!-- Blur Image Start -->
     <string name="blur_image_demo_name">毛玻璃</string>
     <string name="blur_image_describe">RenderScript实现毛玻璃效果</string>
+    <string name="blur_image_scale_label">Scale</string>
+    <string name="blur_image_radius_label">Radius</string>
+    <string name="blur_image_alpha_label">Alpha</string>
+    <string name="blur_image_red_label">Red</string>
+    <string name="blur_image_green_label">Green</string>
+    <string name="blur_image_blue_label">Blue</string>
+    <string name="blur_image_color_label">Filter Color</string>
     <!-- Blur Image End -->
 </resources>
