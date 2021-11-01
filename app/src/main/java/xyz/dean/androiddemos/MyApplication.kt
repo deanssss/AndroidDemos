@@ -5,6 +5,7 @@ import android.content.Context
 import xyz.dean.androiddemos.demos.infinite_list.InfiniteTabActivity
 import xyz.dean.androiddemos.demos.behavior.BehaviorTestActivity
 import xyz.dean.androiddemos.demos.blur_image.BlurImageActivity
+import xyz.dean.androiddemos.demos.dragtreelist.DragTreeListActivity
 import xyz.dean.androiddemos.demos.sample.SampleActivity
 
 class MyApplication : Application() {
@@ -18,6 +19,7 @@ class MyApplication : Application() {
         addDemo(SampleActivity.demoItem)
         addDemo(InfiniteTabActivity.demoItem)
         addDemo(BehaviorTestActivity.demoItem)
+        addDemo(DragTreeListActivity.demoItem)
         addDemo(BlurImageActivity.demoItem)
     }
 

@@ -40,4 +40,8 @@
     <string name="blur_image_blue_label">Blue</string>
     <string name="blur_image_color_label">Filter Color</string>
     <!-- Blur Image End -->
+
+    <!-- Drag List Start -->
+    <string name="drag_list_demo_name">Drag List</string>
+    <string name="drag_list_describe">一个可以拖拽移动的分组列表</string>
 </resources>
