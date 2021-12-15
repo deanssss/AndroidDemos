@@ -44,4 +44,8 @@
     <!-- Drag List Start -->
     <string name="drag_list_demo_name">Drag List</string>
     <string name="drag_list_describe">一个可以拖拽移动的分组列表</string>
+
+    <!-- Custom Rating Bar Start -->
+    <string name="cus_rating_bar_demo_name">自定义RatingBar</string>
+    <string name="cus_rating_bar_describe">一个纯自定义的RatingBar，支持设置星星的间距</string>
 </resources>
