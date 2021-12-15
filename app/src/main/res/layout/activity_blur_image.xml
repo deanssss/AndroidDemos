@@ -18,10 +18,11 @@
             android:id="@+id/origin_iv"
             android:layout_width="287dp"
             android:layout_height="189dp"
+            android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/half_screen_height_guide"
-            android:src="@mipmap/blur_image"
+            android:src="@mipmap/img"
             tools:ignore="ContentDescription" />
 
         <ImageView
