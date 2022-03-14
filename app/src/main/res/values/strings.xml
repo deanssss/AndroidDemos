@@ -48,4 +48,8 @@
     <!-- Custom Rating Bar Start -->
     <string name="cus_rating_bar_demo_name">自定义RatingBar</string>
     <string name="cus_rating_bar_describe">一个纯自定义的RatingBar，支持设置星星的间距</string>
+
+    <!-- Expandable List View -->
+    <string name="expandable_list_demo_name">ExpandableList</string>
+    <string name="expandable_list_describe">一个item可展开的列表</string>
 </resources>

@@ -6,6 +6,7 @@ import xyz.dean.androiddemos.demos.infinite_list.InfiniteTabActivity
 import xyz.dean.androiddemos.demos.behavior.BehaviorTestActivity
 import xyz.dean.androiddemos.demos.blur_image.BlurImageActivity
 import xyz.dean.androiddemos.demos.dragtreelist.DragTreeListActivity
+import xyz.dean.androiddemos.demos.expandable_list.ExpandableListActivity
 import xyz.dean.androiddemos.demos.rating_bar.CusRatingBarDemoActivity
 import xyz.dean.androiddemos.demos.sample.SampleActivity
 
@@ -23,6 +24,7 @@ class MyApplication : Application() {
         addDemo(DragTreeListActivity.demoItem)
         addDemo(BlurImageActivity.demoItem)
         addDemo(CusRatingBarDemoActivity.demoItem)
+        addDemo(ExpandableListActivity.demoItem)
     }
 
     companion object {
