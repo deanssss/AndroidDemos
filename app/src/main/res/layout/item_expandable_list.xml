@@ -15,7 +15,7 @@
         <FrameLayout
             android:id="@+id/item_main_layout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="100dp"
             android:background="#FFFFFF">
 
             <TextView
@@ -28,8 +28,8 @@
         <FrameLayout
             android:id="@+id/item_expand_layout"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="200dp"
             android:background="#eeeeee"
-            android:visibility="@{isExpand ? View.VISIBLE : View.GONE}" />
+            android:visibility="gone" />
     </LinearLayout>
 </layout>
