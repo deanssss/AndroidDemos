@@ -16,29 +16,40 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".SplashActivity"
+            android:exported="true"
             android:noHistory="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="true">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity" />
+            android:name=".MainActivity"
+            android:exported="false" />
         <activity
-            android:name=".demos.sample.SampleActivity" />
+            android:name=".demos.sample.SampleActivity"
+            android:exported="false" />
         <activity
             android:name=".demos.infinite_list.InfiniteTabActivity"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing"
+            android:exported="false" />
         <activity
             android:name=".demos.behavior.BehaviorTestActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false" />
         <activity
-            android:name=".demos.blur_image.BlurImageActivity" />
+            android:name=".demos.blur_image.BlurImageActivity"
+            android:exported="false" />
         <activity
-            android:name=".demos.dragtreelist.DragTreeListActivity" />
+            android:name=".demos.dragtreelist.DragTreeListActivity"
+            android:exported="false" />
         <activity
-            android:name=".demos.rating_bar.CusRatingBarDemoActivity" />
+            android:name=".demos.rating_bar.CusRatingBarDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".demos.dag_task.DagTaskExecActivity"
+            android:exported="false" />
     </application>
+
 </manifest>
