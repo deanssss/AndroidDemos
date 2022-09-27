@@ -48,4 +48,7 @@
     <!-- Custom Rating Bar Start -->
     <string name="cus_rating_bar_demo_name">自定义RatingBar</string>
     <string name="cus_rating_bar_describe">一个纯自定义的RatingBar，支持设置星星的间距</string>
+
+    <string name="dag_task_demo_name">DAG Task</string>
+    <string name="dag_task_describe">有向无环图+拓扑排序实现任务的异步处理。</string>
 </resources>
