@@ -51,4 +51,7 @@
 
     <string name="dag_task_demo_name">DAG Task</string>
     <string name="dag_task_describe">有向无环图+拓扑排序实现任务的异步处理。</string>
+
+    <string name="mem_detector_demo_name">内存监控</string>
+    <string name="mem_detector_describe_text">内存监控示例。</string>
 </resources>
