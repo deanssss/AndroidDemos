@@ -50,6 +50,9 @@
         <activity
             android:name=".demos.dag_task.DagTaskExecActivity"
             android:exported="false" />
+        <activity
+            android:name=".demos.memdetector.MemDetectorActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

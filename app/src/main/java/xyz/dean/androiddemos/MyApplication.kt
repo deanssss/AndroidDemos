@@ -7,6 +7,7 @@ import xyz.dean.androiddemos.demos.behavior.BehaviorTestActivity
 import xyz.dean.androiddemos.demos.blur_image.BlurImageActivity
 import xyz.dean.androiddemos.demos.dag_task.DagTaskExecActivity
 import xyz.dean.androiddemos.demos.dragtreelist.DragTreeListActivity
+import xyz.dean.androiddemos.demos.memdetector.MemDetectorActivity
 import xyz.dean.androiddemos.demos.rating_bar.CusRatingBarDemoActivity
 import xyz.dean.androiddemos.demos.sample.SampleActivity
 
@@ -25,6 +26,7 @@ class MyApplication : Application() {
         addDemo(BlurImageActivity.demoItem)
         addDemo(CusRatingBarDemoActivity.demoItem)
         addDemo(DagTaskExecActivity.demoItem)
+        addDemo(MemDetectorActivity.demoItem)
     }
 
     companion object {
