@@ -53,6 +53,11 @@
         <activity
             android:name=".demos.memdetector.MemDetectorActivity"
             android:exported="false" />
+        <activity
+            android:name=".demos.dcalendar.DCalendarActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="landscape"
+            android:exported="false"/>
     </application>
 
 </manifest>
