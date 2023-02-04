@@ -89,7 +89,6 @@
         android:numColumns="7"
         android:horizontalSpacing="1dp"
         android:verticalSpacing="1dp"
-        android:stretchMode="columnWidth"
         android:overScrollMode="never"
         tools:numColumns="7"
         tools:listitem="@layout/daily_item_layout" />

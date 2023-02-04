@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import xyz.dean.androiddemos.R
-import java.util.Calendar
+import java.util.*
 
 class DCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
     : FrameLayout(context, attrs)
@@ -46,8 +46,6 @@ class DCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             val current = pager.currentItem
             pager.currentItem = current + 1
         }
-        setStartAndEnd()
-        377 / 234
     }
 
     fun setStartAndEnd(start: Calendar? = null, end: Calendar? = null) {
@@ -58,6 +56,19 @@ class DCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
     fun rollTo(date: Calendar) {
         pager.currentItem = pagerAdapter.getPagePos(date)
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val modeW = MeasureSpec.getMode(widthMeasureSpec)
+        val sizeH = MeasureSpec.getSize(heightMeasureSpec)
+        val modeH = MeasureSpec.getMode(heightMeasureSpec)
+
+        if (modeH == MeasureSpec.AT_MOST) {
+            val width = ((950 / 688f) * sizeH).toInt()
+            super.onMeasure(MeasureSpec.makeMeasureSpec(width, modeW), heightMeasureSpec)
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        }
     }
 
     companion object {

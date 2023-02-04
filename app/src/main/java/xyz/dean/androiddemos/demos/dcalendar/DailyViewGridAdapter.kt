@@ -1,21 +1,19 @@
 package xyz.dean.androiddemos.demos.dcalendar
 
-import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.GridView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import xyz.dean.androiddemos.R
-import xyz.dean.util.dp2px
 import java.util.*
 
-class DailyViewGridAdapter(context: Context) : BaseAdapter() {
-    private val spacing = context.dp2px(1f)
-
+class DailyViewGridAdapter(val gridView: GridView) : BaseAdapter() {
     private var data: List<DailyItem> = emptyList()
     private var date = Calendar.getInstance()
     private var now = Calendar.getInstance()
@@ -58,6 +56,9 @@ class DailyViewGridAdapter(context: Context) : BaseAdapter() {
         val mask = view.findViewById<View>(R.id.mask_view)
         mask.isVisible = data.month != date.month + 1
 
+        val height = ((gridView.measuredHeight - gridView.verticalSpacing * 4 - 50) / 5f).toInt()
+        val width = ((gridView.measuredWidth - gridView.horizontalSpacing * 6) / 7f).toInt()
+
         if (width != 0 && height != 0) {
             val lp = view.layoutParams
             lp.width = width
@@ -65,16 +66,6 @@ class DailyViewGridAdapter(context: Context) : BaseAdapter() {
         }
 
         return view
-    }
-
-    private var width = 0
-    private var height = 0
-
-    fun refreshLayout(w: Int, h: Int) {
-        // 多减50是为了预留多半排显示
-        height = ((h - spacing * 4 - 50) / 5f).toInt()
-        width = ((w - spacing * 6) / 7f).toInt() // height * (53 / 46f)
-        notifyDataSetChanged()
     }
 
     data class DailyItem(

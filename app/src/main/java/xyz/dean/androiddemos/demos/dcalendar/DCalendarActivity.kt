@@ -5,6 +5,7 @@ import android.view.View
 import xyz.dean.androiddemos.BaseActivity
 import xyz.dean.androiddemos.DemoItem
 import xyz.dean.androiddemos.R
+import java.util.*
 
 class DCalendarActivity : BaseActivity() {
     override fun getDemoItem(): DemoItem = demoItem
@@ -15,7 +16,7 @@ class DCalendarActivity : BaseActivity() {
 
         findViewById<View>(R.id.back_view_mask).setOnClickListener { onBackPressed() }
         val calendar = findViewById<DCalendar>(R.id.calendar)
-        val calendarLayout = findViewById<View>(R.id.calendar_layout)
+        calendar.rollTo(Calendar.getInstance())
     }
 
     companion object {

@@ -8,9 +8,8 @@
 
     <RelativeLayout
         android:id="@+id/calendar_layout"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="400"
         android:background="#244166">
 
         <ImageView
@@ -54,9 +53,11 @@
 
         <LinearLayout
             android:id="@+id/occupied_layout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="13dp"
+            android:layout_alignStart="@id/calendar"
+            android:layout_alignEnd="@id/calendar"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
             android:gravity="center" >
@@ -79,10 +80,4 @@
         </LinearLayout>
 
     </RelativeLayout>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="348"
-        android:background="#dddddd"/>
 </LinearLayout>

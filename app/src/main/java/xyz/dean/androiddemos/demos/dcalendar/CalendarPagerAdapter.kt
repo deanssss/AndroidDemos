@@ -53,7 +53,7 @@ class CalendarPagerAdapter : PagerAdapter() {
 
     private fun initView(view: View) {
         val gridView = view.findViewById<GridView>(R.id.gridview)
-        val adapter = DailyViewGridAdapter(view.context)
+        val adapter = DailyViewGridAdapter(gridView)
         gridView.adapter = adapter
         gridView.numColumns = 7
     }
@@ -61,9 +61,6 @@ class CalendarPagerAdapter : PagerAdapter() {
     private fun setViewData(view: View, yearMonth: Calendar, data: Any?) {
         val gridView = view.findViewById<GridView>(R.id.gridview)
         val adapter = gridView.adapter as? DailyViewGridAdapter ?: return
-        view.post {
-            adapter.refreshLayout(gridView.measuredWidth, gridView.measuredHeight)
-        }
         adapter.setDate(yearMonth, data)
     }
 
