@@ -3,7 +3,6 @@ package xyz.dean.androiddemos.demos.dcalendar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
 import androidx.viewpager.widget.PagerAdapter
 import xyz.dean.androiddemos.R
 import java.util.*
@@ -17,7 +16,7 @@ class CalendarPagerAdapter : PagerAdapter() {
     private val data: List<Any> = listOf(
         Calendar.getInstance().apply { set(2023, 0, 1) }
     )
-    private val views: Array<View?> = arrayOfNulls(4)
+    private val views: Array<View?> = arrayOfNulls(CACHE_VIEW_COUNT)
 
     fun getYearMonthStr(position: Int): String {
         val date = getYearMonth(position)
@@ -32,12 +31,12 @@ class CalendarPagerAdapter : PagerAdapter() {
     override fun getCount(): Int = endDate.monthDiff(startDate) + 1
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view = views[position % 4] ?: kotlin.run {
+        val view = views[position % CACHE_VIEW_COUNT] ?: kotlin.run {
             LayoutInflater.from(container.context)
                 .inflate(R.layout.month_calendar_layout, container, false)
                 .apply {
                     initView(this)
-                    views[position % 4] = this
+                    views[position % CACHE_VIEW_COUNT] = this
                 }
         }
 
@@ -52,14 +51,14 @@ class CalendarPagerAdapter : PagerAdapter() {
     }
 
     private fun initView(view: View) {
-        val gridView = view.findViewById<GridView>(R.id.gridview)
-        val adapter = DailyViewGridAdapter(gridView)
+        val gridView = view.findViewById<AdaptiveGridView>(R.id.gridview)
+        val adapter = DailyViewGridAdapter()
         gridView.adapter = adapter
-        gridView.numColumns = 7
+        gridView.numColumns = CALENDAR_GRID_COLUMNS
     }
 
     private fun setViewData(view: View, yearMonth: Calendar, data: Any?) {
-        val gridView = view.findViewById<GridView>(R.id.gridview)
+        val gridView = view.findViewById<AdaptiveGridView>(R.id.gridview)
         val adapter = gridView.adapter as? DailyViewGridAdapter ?: return
         adapter.setDate(yearMonth, data)
     }
@@ -80,6 +79,7 @@ class CalendarPagerAdapter : PagerAdapter() {
             "${startDate.year}-${startDate.month} " + "~ ${endDate.year}-${endDate.month}")
 
     companion object {
-
+        private const val CACHE_VIEW_COUNT = 4
+        private const val CALENDAR_GRID_COLUMNS = 7
     }
 }

@@ -5,15 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.GridView
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.children
 import androidx.core.view.isVisible
 import xyz.dean.androiddemos.R
 import java.util.*
 
-class DailyViewGridAdapter(val gridView: GridView) : BaseAdapter() {
+class DailyViewGridAdapter : BaseAdapter() {
     private var data: List<DailyItem> = emptyList()
     private var date = Calendar.getInstance()
     private var now = Calendar.getInstance()
@@ -55,15 +53,6 @@ class DailyViewGridAdapter(val gridView: GridView) : BaseAdapter() {
 
         val mask = view.findViewById<View>(R.id.mask_view)
         mask.isVisible = data.month != date.month + 1
-
-        val height = ((gridView.measuredHeight - gridView.verticalSpacing * 4 - 50) / 5f).toInt()
-        val width = ((gridView.measuredWidth - gridView.horizontalSpacing * 6) / 7f).toInt()
-
-        if (width != 0 && height != 0) {
-            val lp = view.layoutParams
-            lp.width = width
-            lp.height = height
-        }
 
         return view
     }
