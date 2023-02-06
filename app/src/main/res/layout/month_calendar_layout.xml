@@ -82,7 +82,7 @@
             tools:ignore="HardcodedText" />
     </LinearLayout>
 
-    <xyz.dean.androiddemos.demos.dcalendar.AdaptiveGridView
+    <xyz.dean.androiddemos.demos.dcalendar.internal.AdaptiveGridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

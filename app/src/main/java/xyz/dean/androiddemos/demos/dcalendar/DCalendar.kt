@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import xyz.dean.androiddemos.R
+import xyz.dean.androiddemos.demos.dcalendar.internal.CalendarPagerAdapter
 import java.util.*
 
 class DCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
@@ -16,6 +17,7 @@ class DCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 {
     private lateinit var pager: ViewPager
     private val pagerAdapter = CalendarPagerAdapter()
+    private var currentSelectDate = Calendar.getInstance()
 
     init {
         val layoutInflater = LayoutInflater.from(context)
@@ -33,7 +35,8 @@ class DCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             override fun onPageScrollStateChanged(state: Int) { }
 
             override fun onPageSelected(position: Int) {
-                dateTv.text = pagerAdapter.getYearMonthStr(position)
+                val yearMonth = pagerAdapter.getYearMonth(position)
+                dateTv.text = "${yearMonth.year}年${yearMonth.month + 1}月"
             }
         })
         val prevIv = findViewById<ImageView>(R.id.prev_month_iv)
@@ -48,14 +51,31 @@ class DCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         }
     }
 
-    fun setStartAndEnd(start: Calendar? = null, end: Calendar? = null) {
+    fun setData(
+        start: Calendar? = null,
+        end: Calendar? = null,
+        asyncDataProvider: (year: Int, month: Int, (Any) -> Unit) -> Unit = { _, _, _ -> }
+    ) {
+        if (start != null && end != null && start.after(end)) {
+            error("Start date cannot be later than end date.")
+        }
         pagerAdapter.startDate = start ?: defaultStart
         pagerAdapter.endDate = end ?: defaultEnd
+        pagerAdapter.asyncDataProvider = asyncDataProvider
         pagerAdapter.notifyDataSetChanged()
+
+        if (currentSelectDate.before(pagerAdapter.startDate)
+            || currentSelectDate.after(pagerAdapter.endDate)
+        ) {
+            currentSelectDate = pagerAdapter.startDate
+        }
+        pager.setCurrentItem(pagerAdapter.getPagePos(currentSelectDate), false)
     }
 
-    fun rollTo(date: Calendar) {
-        pager.currentItem = pagerAdapter.getPagePos(date)
+    fun rollTo(date: Calendar, withAnim: Boolean = false) {
+        currentSelectDate = date
+        val pagePos = pagerAdapter.getPagePos(currentSelectDate)
+        pager.setCurrentItem(pagePos, withAnim)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -64,7 +84,7 @@ class DCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         val modeH = MeasureSpec.getMode(heightMeasureSpec)
 
         if (modeH == MeasureSpec.AT_MOST) {
-            val width = ((950 / 688f) * sizeH).toInt()
+            val width = (CALENDAR_VIEW_SIZE_RATIO * sizeH).toInt()
             super.onMeasure(MeasureSpec.makeMeasureSpec(width, modeW), heightMeasureSpec)
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -72,13 +92,11 @@ class DCalendar @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     }
 
     companion object {
-        inline val defaultStart: Calendar get() = Calendar.getInstance().apply {
-            clear()
-            set(1900, 0, 1)
-        }
-        inline val defaultEnd: Calendar get() = Calendar.getInstance().apply {
-            clear()
-            set(2900, 0, 1)
-        }
+        private const val CALENDAR_VIEW_SIZE_RATIO = 950 / 688f
+
+        inline val defaultStart: Calendar get() = Calendar.getInstance()
+            .apply { clear(); set(1900, 0, 1) }
+        inline val defaultEnd: Calendar get() = Calendar.getInstance()
+            .apply { clear(); set(2900, 0, 1) }
     }
 }

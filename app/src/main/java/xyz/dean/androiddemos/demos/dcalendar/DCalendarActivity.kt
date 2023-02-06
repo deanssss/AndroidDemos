@@ -1,11 +1,13 @@
 package xyz.dean.androiddemos.demos.dcalendar
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import xyz.dean.androiddemos.BaseActivity
 import xyz.dean.androiddemos.DemoItem
 import xyz.dean.androiddemos.R
 import java.util.*
+import kotlin.concurrent.thread
 
 class DCalendarActivity : BaseActivity() {
     override fun getDemoItem(): DemoItem = demoItem
@@ -16,7 +18,18 @@ class DCalendarActivity : BaseActivity() {
 
         findViewById<View>(R.id.back_view_mask).setOnClickListener { onBackPressed() }
         val calendar = findViewById<DCalendar>(R.id.calendar)
-        calendar.rollTo(Calendar.getInstance())
+        calendar.setData(
+            start = Calendar.getInstance().apply { set(2021, 0, 1) },
+            end = Calendar.getInstance().apply { set(2024, 0, 1) },
+            asyncDataProvider = { y, m, callback ->
+                Log.d("DDDD", "loading data on date: $y-$m")
+                thread {
+                    Thread.sleep(1000)
+                    calendar.post { callback("$y-$m") }
+                }
+            }
+        )
+        calendar.rollTo(Calendar.getInstance(), false)
     }
 
     companion object {

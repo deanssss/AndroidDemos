@@ -1,4 +1,4 @@
-package xyz.dean.androiddemos.demos.dcalendar
+package xyz.dean.androiddemos.demos.dcalendar.internal
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.ListAdapter
 
-class AdaptiveGridView constructor(
+internal class AdaptiveGridView constructor(
     context: Context, attrs: AttributeSet? = null
 ) : GridView(context, attrs) {
     
@@ -18,7 +18,7 @@ class AdaptiveGridView constructor(
 
     override fun getAdapter(): ListAdapter? {
         val adaptiveAdapter = super.getAdapter()
-        return if (adaptiveAdapter is AdaptiveAdapter) adaptiveAdapter.adapter 
+        return if (adaptiveAdapter is AdaptiveAdapter) adaptiveAdapter.adapter
         else adaptiveAdapter
     }
 
