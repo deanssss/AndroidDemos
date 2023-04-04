@@ -13,6 +13,7 @@ import xyz.dean.androiddemos.common.log
 import xyz.dean.util.reactivex.BindLife
 import xyz.dean.util.task.TaskExecutor
 import xyz.dean.util.task.TaskExecutor.Companion.task
+import java.util.concurrent.Executors
 
 class DagTaskExecActivity : BaseActivity(), BindLife {
     override val compositeDisposable = CompositeDisposable()
@@ -27,21 +28,24 @@ class DagTaskExecActivity : BaseActivity(), BindLife {
     private fun execTasks() {
         Toast.makeText(this, "Start initialize.", Toast.LENGTH_SHORT).show()
         Completable.fromAction {
+            val customExecutor = Executors.newSingleThreadExecutor {
+                return@newSingleThreadExecutor Thread(it, "SingleThread")
+            }
             val start = System.currentTimeMillis()
             TaskExecutor.build {
-                val logTask = task(taskName = "init log", runnable = InitLogTask())
+                val ATask = task(taskName = "A", runnable = InitATask())
                     .install()
-                val serTask = task(taskName = "init server", runnable = InitServiceTask())
-                    .dependent(logTask)
+                val BTask = task(taskName = "B", runnable = InitBTask(), executorService = customExecutor)
+                    .dependent(ATask)
                     .install()
-                val moduleTask = task(taskName = "init module", runnable = InitModuleTask())
-                    .dependent(logTask)
+                val CTask = task(taskName = "C", runnable = InitCTask(), executorService = customExecutor)
+                    .dependent(ATask)
                     .install()
-                val bTask = task(taskName = "init b", runnable = InitBTask())
-                    .dependent(serTask)
+                val DTask = task(taskName = "D", runnable = InitDTask(), executorService = customExecutor)
+                    .dependent(BTask)
                     .install()
-                val cTask = task(InitCTask())
-                    .dependent(moduleTask, bTask)
+                val ETask = task(taskName = "E", runnable = InitETask())
+                    .dependent(CTask, DTask)
                     .install()
             }.startUp()
             val end = System.currentTimeMillis()
@@ -59,43 +63,43 @@ class DagTaskExecActivity : BaseActivity(), BindLife {
         destroyDisposables()
     }
 
-    class InitLogTask : Runnable {
+    class InitATask : Runnable {
         override fun run() {
-            log.d(TAG, "[${Thread.currentThread().name}]init log start")
+            log.d(TAG, "[${Thread.currentThread().name}]A start")
             Thread.sleep(1000)
-            log.d(TAG, "[${Thread.currentThread().name}]init log success")
-        }
-    }
-
-    class InitServiceTask : Runnable {
-        override fun run() {
-            log.d(TAG, "[${Thread.currentThread().name}]init service start")
-            Thread.sleep(1000)
-            log.d(TAG, "[${Thread.currentThread().name}]init service success")
+            log.d(TAG, "[${Thread.currentThread().name}]A success")
         }
     }
 
     class InitBTask : Runnable {
         override fun run() {
-            log.d(TAG, "[${Thread.currentThread().name}]init B start")
+            log.d(TAG, "[${Thread.currentThread().name}]B start")
             Thread.sleep(1000)
-            log.d(TAG, "[${Thread.currentThread().name}]init B success")
-        }
-    }
-
-    class InitModuleTask : Runnable {
-        override fun run() {
-            log.d(TAG, "[${Thread.currentThread().name}]init module start")
-            Thread.sleep(2000)
-            log.d(TAG, "[${Thread.currentThread().name}]init module success")
+            log.d(TAG, "[${Thread.currentThread().name}]B success")
         }
     }
 
     class InitCTask : Runnable {
         override fun run() {
-            log.d(TAG, "[${Thread.currentThread().name}]init C start")
+            log.d(TAG, "[${Thread.currentThread().name}]C start")
             Thread.sleep(1000)
-            log.d(TAG, "[${Thread.currentThread().name}]init C success")
+            log.d(TAG, "[${Thread.currentThread().name}]C success")
+        }
+    }
+
+    class InitDTask : Runnable {
+        override fun run() {
+            log.d(TAG, "[${Thread.currentThread().name}]D start")
+            Thread.sleep(1000)
+            log.d(TAG, "[${Thread.currentThread().name}]D success")
+        }
+    }
+
+    class InitETask : Runnable {
+        override fun run() {
+            log.d(TAG, "[${Thread.currentThread().name}]E start")
+            Thread.sleep(2000)
+            log.d(TAG, "[${Thread.currentThread().name}]E success")
         }
     }
 
