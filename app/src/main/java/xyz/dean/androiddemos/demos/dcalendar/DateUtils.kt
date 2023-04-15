@@ -7,11 +7,21 @@ inline val Calendar.month get() = get(Calendar.MONTH)
 inline val Calendar.day get() = get(Calendar.DAY_OF_MONTH)
 inline val Calendar.week get() = get(Calendar.DAY_OF_WEEK)
 inline val Calendar.dayOfYear get() = get(Calendar.DAY_OF_YEAR)
+inline val Calendar.weekOfYear get() = get(Calendar.WEEK_OF_YEAR)
 
 fun Calendar.firstDayOfMonth(): Calendar {
     val new = Calendar.getInstance()
     new.clear()
     new.set(year, month, 1)
+    return new
+}
+
+fun Calendar.lastDayOfMonth(): Calendar {
+    val new = Calendar.getInstance()
+    new.clear()
+    new.set(year, month, 1)
+    new.add(Calendar.MONTH, 1)
+    new.add(Calendar.DAY_OF_MONTH, -1)
     return new
 }
 
@@ -56,4 +66,28 @@ fun Calendar.lastDayInMonthView(): Calendar {
 fun Calendar.monthDiff(that: Calendar): Int {
     val (start, end) = if (this.before(that)) this to that else that to this
     return (end.year - start.year) * 12 + (end.month - start.month)
+}
+
+fun Calendar.dayDiff(that: Calendar): Int {
+    val (start, end) = if (this.before(that)) this to that else that to this
+    var diffDays = end.dayOfYear - start.dayOfYear
+    if (start.year != end.year) {
+        val temp = start.clone() as Calendar
+        do {
+            diffDays += temp.getActualMaximum(Calendar.DAY_OF_YEAR)
+            temp.add(Calendar.YEAR, 1)
+        } while (temp.year != end.year)
+    }
+    return diffDays
+}
+
+fun Calendar.isSameDay(that: Calendar): Boolean =
+    this.year == that.year && this.dayOfYear == that.dayOfYear
+
+fun Calendar.beforeByDay(that: Calendar): Boolean {
+    return this.year < that.year || (this.year == that.year && this.dayOfYear < that.dayOfYear)
+}
+
+fun Calendar.afterByDay(that: Calendar): Boolean {
+    return this.year > that.year || (this.year == that.year && this.dayOfYear > that.dayOfYear)
 }

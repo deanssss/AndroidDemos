@@ -7,7 +7,7 @@ import androidx.core.view.contains
 import androidx.viewpager.widget.PagerAdapter
 import xyz.dean.androiddemos.R
 import xyz.dean.androiddemos.demos.dcalendar.*
-import java.util.*
+import java.util.Calendar
 
 internal class CalendarPagerAdapter : PagerAdapter() {
     var startDate: Calendar = DCalendar.defaultStart
@@ -36,7 +36,6 @@ internal class CalendarPagerAdapter : PagerAdapter() {
             LayoutInflater.from(container.context)
                 .inflate(R.layout.month_calendar_layout, container, false)
                 .apply {
-                    initView(this)
                     views[position % CACHE_VIEW_COUNT] = this
                 }
         }
@@ -51,17 +50,9 @@ internal class CalendarPagerAdapter : PagerAdapter() {
         return yearMonthStr
     }
 
-    private fun initView(view: View) {
-        val gridView = view.findViewById<AdaptiveGridView>(R.id.gridview)
-        val adapter = DailyViewGridAdapter()
-        gridView.adapter = adapter
-        gridView.numColumns = CALENDAR_GRID_COLUMNS
-    }
-
     private fun setViewData(view: View, yearMonth: Calendar, position: Int) {
-        val gridView = view.findViewById<AdaptiveGridView>(R.id.gridview)
-        val adapter = gridView.adapter as? DailyViewGridAdapter ?: return
-        adapter.setDate(yearMonth)
+        val dailyGrid = view.findViewById<CalendarGridView>(R.id.daily_item_grid)
+        dailyGrid.setDate(yearMonth)
 
         asyncDataProvider(yearMonth.year, yearMonth.month + 1) {
             val isPageDestroyed = !views.any { v -> v?.tag == getYearMonthStr(position) }
@@ -69,7 +60,7 @@ internal class CalendarPagerAdapter : PagerAdapter() {
                 // 异步数据返回时，page可能已经被回收了，此时不要执行渲染
                 return@asyncDataProvider
             }
-            adapter.setData(it)
+            dailyGrid.setData()
         }
     }
 
@@ -91,6 +82,5 @@ internal class CalendarPagerAdapter : PagerAdapter() {
 
     companion object {
         private const val CACHE_VIEW_COUNT = 4
-        private const val CALENDAR_GRID_COLUMNS = 7
     }
 }

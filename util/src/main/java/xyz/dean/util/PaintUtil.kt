@@ -37,6 +37,11 @@ fun Context.sp2px(spValue: Float): Int {
     return (spValue * fontScale + 0.5f).toInt()
 }
 
+fun Context.sp2pxF(spValue: Float): Float {
+    val fontScale = resources.displayMetrics.scaledDensity
+    return spValue * fontScale
+}
+
 @Suppress("DEPRECATION")
 fun Context.compatGetColor(@ColorRes colorRes: Int): Int {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

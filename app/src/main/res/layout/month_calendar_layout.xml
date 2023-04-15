@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,14 +81,21 @@
             tools:ignore="HardcodedText" />
     </LinearLayout>
 
-    <xyz.dean.androiddemos.demos.dcalendar.internal.AdaptiveGridView
-        android:id="@+id/gridview"
+<!--    <xyz.dean.androiddemos.demos.dcalendar.internal.AdaptiveGridView-->
+<!--        android:id="@+id/gridview"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:numColumns="7"-->
+<!--        android:horizontalSpacing="1dp"-->
+<!--        android:verticalSpacing="1dp"-->
+<!--        android:overScrollMode="never"-->
+<!--        tools:numColumns="7"-->
+<!--        tools:listitem="@layout/daily_item_layout" />-->
+
+    <xyz.dean.androiddemos.demos.dcalendar.internal.CalendarGridView
+        android:id="@+id/daily_item_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="7"
-        android:horizontalSpacing="1dp"
-        android:verticalSpacing="1dp"
         android:overScrollMode="never"
-        tools:numColumns="7"
-        tools:listitem="@layout/daily_item_layout" />
+        tools:listitem="@layout/calendar_item_normal_layout" />
 </LinearLayout>
