@@ -3,11 +3,14 @@ package xyz.dean.util.pref
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.gson.Gson
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import xyz.dean.util.fromJson
+import xyz.dean.util.toJson
 
 @RunWith(AndroidJUnit4::class)
 class SpUtilTest {
@@ -36,9 +39,17 @@ class SpUtilTest {
         var boolean2: Boolean? by nullableBooleanField()
         var boolean3: Boolean? by nullableBooleanField(default = false)
 
-        override fun setAlias() {
-            ::string1 alias "student"
-        }
+        var obj1: Dt by objectField(
+            default = Dt("default", 0),
+            serializer = Dt.Companion::serializer,
+            parser = Dt.Companion::parser)
+        var obj2: Dt? by nullableObjectField(
+            serializer = Dt.Companion::serializer,
+            parser = Dt.Companion::parser)
+        var obj3: Dt? by nullableObjectField(
+            default = Dt("default-1", 1),
+            serializer = Dt.Companion::serializer,
+            parser = Dt.Companion::parser)
     }
 
     lateinit var spModel: TestModel
@@ -75,6 +86,12 @@ class SpUtilTest {
             Assert.assertEquals(boolean1, false)
             Assert.assertEquals(boolean2, null)
             Assert.assertEquals(boolean3, false)
+
+            Assert.assertEquals(obj1.str, "default")
+            Assert.assertEquals(obj1.int, 0)
+            Assert.assertEquals(obj2, null)
+            Assert.assertEquals(obj3?.str, "default-1")
+            Assert.assertEquals(obj3?.int, 1)
         }
 
         // write
@@ -130,6 +147,19 @@ class SpUtilTest {
             Assert.assertEquals(boolean2, true)
             boolean3 = true
             Assert.assertEquals(boolean3, true)
+        }
+
+        spModel.run {
+            val dt = Dt("test", 100)
+            obj1 = dt
+            Assert.assertEquals(obj1.str, dt.str)
+            Assert.assertEquals(obj1.int, dt.int)
+            obj2 = dt
+            Assert.assertEquals(obj2?.str, dt.str)
+            Assert.assertEquals(obj2?.int, dt.int)
+            obj3 = dt
+            Assert.assertEquals(obj3?.str, dt.str)
+            Assert.assertEquals(obj3?.int, dt.int)
         }
 
         // remove
@@ -191,6 +221,27 @@ class SpUtilTest {
             // Assert.assertEquals(boolean2, null)
             boolean3 = null
             Assert.assertEquals(boolean3, false)
+        }
+
+        spModel.run {
+            remove(::obj1)
+            Assert.assertEquals(obj1.str, "default")
+            Assert.assertEquals(obj1.int, 0)
+            obj2 = null
+            Assert.assertEquals(obj2, null)
+            obj3 = null
+            Assert.assertEquals(obj3?.str, "default-1")
+            Assert.assertEquals(obj3?.int, 1)
+        }
+    }
+
+    class Dt(
+        val str: String,
+        val int: Int
+    ) {
+        companion object {
+            fun serializer(dt: Dt): String = dt.toJson()
+            fun parser(json: String): Dt = Gson().fromJson(json)
         }
     }
 
