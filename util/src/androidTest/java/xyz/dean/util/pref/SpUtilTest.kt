@@ -126,9 +126,9 @@ class SpUtilTest {
             long1 = 9999999999L
             Assert.assertEquals(long1, 9999999999L)
             long2 = 9999999999L
-            Assert.assertEquals(long2!!, 9999999999L)
+            Assert.assertEquals(long2, 9999999999L)
             long3 = 9999999999L
-            Assert.assertEquals(long3!!, 9999999999L)
+            Assert.assertEquals(long3, 9999999999L)
         }
 
         spModel.run {
@@ -167,9 +167,7 @@ class SpUtilTest {
             remove(::string1)
             Assert.assertEquals(string1, "zhangsan")
             string2 = null
-            Assert.assertTrue(string2 == null)
-            // Interesting...
-            // Assert.assertEquals(string2, null)
+             Assert.assertEquals(string2, null)
             string3 = null
             Assert.assertEquals(string3, "wangwu")
         }
@@ -178,8 +176,7 @@ class SpUtilTest {
             remove(::int1)
             Assert.assertEquals(int1, 23)
             int2 = null
-            Assert.assertTrue(int2 == null)
-            // Assert.assertEquals(int2, null)
+            Assert.assertEquals(int2, null)
             int3 = null
             Assert.assertEquals(int3, 24)
         }
@@ -188,7 +185,7 @@ class SpUtilTest {
             remove(::strSet1)
             Assert.assertTrue(strSet1.isEmpty())
             strSet2 = null
-            Assert.assertTrue(strSet2 == null)
+            Assert.assertEquals(strSet2, null)
             strSet3 = null
             Assert.assertTrue(strSet3?.first() == "default")
         }
@@ -197,8 +194,7 @@ class SpUtilTest {
             remove(::long1)
             Assert.assertEquals(long1, 0L)
             long2 = null
-            Assert.assertTrue(long2 == null)
-            // Assert.assertEquals(long2, null)
+            Assert.assertEquals(long2, null)
             long3 = null
             Assert.assertEquals(long3, 0L)
         }
@@ -207,8 +203,7 @@ class SpUtilTest {
             remove(::float1)
             Assert.assertEquals(float1, 0f)
             float2 = null
-            Assert.assertTrue(float2 == null)
-            // Assert.assertEquals(float2, null)
+            Assert.assertEquals(float2, null)
             float3 = null
             Assert.assertEquals(float3, 0f)
         }
@@ -217,8 +212,7 @@ class SpUtilTest {
             remove(::boolean1)
             Assert.assertEquals(boolean1, false)
             boolean2 = null
-            Assert.assertTrue(boolean2 == null)
-            // Assert.assertEquals(boolean2, null)
+            Assert.assertEquals(boolean2, null)
             boolean3 = null
             Assert.assertEquals(boolean3, false)
         }
