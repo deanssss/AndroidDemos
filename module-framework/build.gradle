@@ -1,0 +1,25 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    rootProject.apply(delegate, rootProject.compileConfig)
+
+    defaultConfig {
+        rootProject.apply(delegate, rootProject.sdkConfig)
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+}
+
+dependencies {
+    def deps = rootProject.deps
+
+    implementation deps.kotlin.stadlib_jdk7
+    implementation deps.androidx.lifecycle_common_java8
+    api deps.google.auto_service_annotations
+}
