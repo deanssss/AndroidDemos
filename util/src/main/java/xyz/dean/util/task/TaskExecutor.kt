@@ -1,6 +1,7 @@
 package xyz.dean.util.task
 
 import xyz.dean.util.log
+import androidx.annotation.WorkerThread
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -11,20 +12,28 @@ class TaskExecutor internal constructor(
     private val name: String,
     private val executorService: ExecutorService
 ) {
-    private val tasks: MutableList<ExecutableTask> = mutableListOf()
+    private val _tasks: MutableList<ExecutableTask> = mutableListOf()
+    internal val tasks: List<ExecutableTask> get() = _tasks
     private val executedTasks: BlockingQueue<Task> = LinkedBlockingQueue()
 
     /**
      * 调用此方法将创建任务，并将其添加到任务图中，以供后续执行。
      */
     fun TaskBuilder.install(): ExecutableTask {
-        return this.build().also { tasks.add(it) }
+        return this.build().also { _tasks.add(it) }
     }
 
+    /**
+     * 启动TaskExecutor，开始执行任务。注意此方法会阻塞调用线程，直到任所有务执行完毕或者异常结束。
+     */
+    @WorkerThread
     fun startUp() {
         start(CompleteTask.EMPTY)
     }
 
+    /**
+     * 异步启动TaskExecutor执行任务，[onCompleted]将在所有任务执行完毕后回调，回调在子线程。
+     */
     fun startUpAsync(onCompleted: () -> Unit = { }) {
         thread {
             val completeTask = CompleteTask(onCompleted)
@@ -57,8 +66,8 @@ class TaskExecutor internal constructor(
 
     private fun executeTasks(completeTask: CompleteTask) {
         // 拓扑排序处理任务执行
-        val readyTasks = tasks.filter { it.isReady }
-        if (readyTasks.isEmpty() && tasks.isEmpty()) {
+        val readyTasks = _tasks.filter { it.isReady }
+        if (readyTasks.isEmpty() && _tasks.isEmpty()) {
             // 任务都执行完了
             executedTasks.offer(completeTask)
             return
@@ -68,7 +77,7 @@ class TaskExecutor internal constructor(
 
     private fun removeTask(task: ExecutableTask) {
         task.destroy()
-        tasks.remove(task)
+        _tasks.remove(task)
     }
 
     internal fun submit(task: ExecutableTask) {
@@ -90,13 +99,13 @@ class TaskExecutor internal constructor(
     private fun validateDepsGraph(): Boolean {
         val visited = mutableListOf<ExecutableTask>()
         while (true) {
-            val vi = tasks.filter {
+            val vi = _tasks.filter {
                 !visited.contains(it) // 过滤掉已访问过的
                         && it.dependencies.all { d -> visited.contains(d) } // 当前节点所有依赖也被访问过
             }
             if (vi.isEmpty()) {
                 // 依赖图中所有节点都被访问过了，就能保证其中无环。
-                return visited.size == tasks.size
+                return visited.size == _tasks.size
             }
             visited.addAll(vi)
         }
@@ -115,19 +124,6 @@ class TaskExecutor internal constructor(
                 // 虽然任务当前的定义方式可以保证依赖图中一定无环，保险起见还是验证一下。
                 if (!validateDepsGraph()) error("There is a cycle in the task graph.")
             }
-        }
-
-        /**
-         * 声明一个可执行任务，通过[runnable]提供具体的逻辑；[ignoreErrors]用于设置当任务抛出异常时，
-         * 是否需要中断剩余任务的执行；使用[taskName]为任务提供一个易于理解的名字。
-         */
-        fun TaskExecutor.task(
-            runnable: Runnable,
-            taskName: String = "",
-            ignoreErrors: Boolean = false,
-            executorService: ExecutorService? = null
-        ): TaskBuilder {
-            return TaskBuilder(this, taskName, ignoreErrors, runnable, executorService)
         }
 
         private fun defaultExecutorService(): ExecutorService {
