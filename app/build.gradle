@@ -37,6 +37,8 @@ dependencies {
     def deps = rootProject.deps
 
     implementation project(':util')
+    implementation project(':module-framework')
+    kapt deps.google.auto_service
 
     // Kotlin language support
     implementation deps.kotlin.stadlib_jdk7

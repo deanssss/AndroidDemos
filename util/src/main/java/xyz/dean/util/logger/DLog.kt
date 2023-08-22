@@ -4,45 +4,60 @@ package xyz.dean.util.logger
 
 import androidx.annotation.IntRange
 
-class DLog {
+interface ILog {
+    fun v(tag: String, tr: Throwable? = null, msg: () -> String)
+    fun v(tag: String, msg: String, tr: Throwable? = null)
+    fun d(tag: String, tr: Throwable? = null, msg: () -> String)
+    fun d(tag: String, msg: String, tr: Throwable? = null)
+    fun i(tag: String, tr: Throwable? = null, msg: () -> String)
+    fun i(tag: String, msg: String, tr: Throwable? = null)
+    fun w(tag: String, tr: Throwable? = null, msg: () -> String)
+    fun w(tag: String, msg: String, tr: Throwable? = null)
+    fun e(tag: String, tr: Throwable? = null, msg: () -> String)
+    fun e(tag: String, msg: String, tr: Throwable? = null)
+    fun wtf(tag: String, tr: Throwable? = null, msg: () -> String)
+    fun wtf(tag: String, msg: String, tr: Throwable? = null)
+}
+
+class DLog : ILog {
     var printers: MutableList<LogPrinter> = mutableListOf()
     var tagFilter: (String) -> Boolean = { true }
 
-    fun v(tag: String, tr: Throwable? = null, msg: () -> String)
-            = log(LogPrinter.LogType.VERBOSE, tag, msg.invoke(), tr)
+    override fun v(tag: String, tr: Throwable?, msg: () -> String) =
+        log(LogPrinter.LogType.VERBOSE, tag, msg.invoke(), tr)
 
-    fun v(tag: String, msg: String, tr: Throwable? = null)
-            = log(LogPrinter.LogType.VERBOSE, tag, msg, tr)
+    override fun v(tag: String, msg: String, tr: Throwable?) =
+        log(LogPrinter.LogType.VERBOSE, tag, msg, tr)
 
-    fun d(tag: String, tr: Throwable? = null, msg: () -> String)
-            = log(LogPrinter.LogType.DEBUG, tag, msg.invoke(), tr)
+    override fun d(tag: String, tr: Throwable?, msg: () -> String) =
+        log(LogPrinter.LogType.DEBUG, tag, msg.invoke(), tr)
 
-    fun d(tag: String, msg: String, tr: Throwable? = null)
-            = log(LogPrinter.LogType.DEBUG, tag, msg, tr)
+    override fun d(tag: String, msg: String, tr: Throwable?) =
+        log(LogPrinter.LogType.DEBUG, tag, msg, tr)
 
-    fun i(tag: String, tr: Throwable? = null, msg: () -> String)
-            = log(LogPrinter.LogType.INFO, tag, msg.invoke(), tr)
+    override fun i(tag: String, tr: Throwable?, msg: () -> String) =
+        log(LogPrinter.LogType.INFO, tag, msg.invoke(), tr)
 
-    fun i(tag: String, msg: String, tr: Throwable? = null)
-            = log(LogPrinter.LogType.INFO, tag, msg, tr)
+    override fun i(tag: String, msg: String, tr: Throwable?) =
+        log(LogPrinter.LogType.INFO, tag, msg, tr)
 
-    fun w(tag: String, tr: Throwable? = null, msg: () -> String)
-            = log(LogPrinter.LogType.WARNING, tag, msg.invoke(), tr)
+    override fun w(tag: String, tr: Throwable?, msg: () -> String) =
+        log(LogPrinter.LogType.WARNING, tag, msg.invoke(), tr)
 
-    fun w(tag: String, msg: String, tr: Throwable? = null)
-            = log(LogPrinter.LogType.WARNING, tag, msg, tr)
+    override fun w(tag: String, msg: String, tr: Throwable?) =
+        log(LogPrinter.LogType.WARNING, tag, msg, tr)
 
-    fun e(tag: String, tr: Throwable? = null, msg: () -> String)
-            = log(LogPrinter.LogType.ERROR, tag, msg.invoke(), tr)
+    override fun e(tag: String, tr: Throwable?, msg: () -> String) =
+        log(LogPrinter.LogType.ERROR, tag, msg.invoke(), tr)
 
-    fun e(tag: String, msg: String, tr: Throwable? = null)
-            = log(LogPrinter.LogType.ERROR, tag, msg, tr)
+    override fun e(tag: String, msg: String, tr: Throwable?) =
+        log(LogPrinter.LogType.ERROR, tag, msg, tr)
 
-    fun wtf(tag: String, tr: Throwable? = null, msg: () -> String)
-            = log(LogPrinter.LogType.ASSERT, tag, msg.invoke(), tr)
+    override fun wtf(tag: String, tr: Throwable?, msg: () -> String) =
+        log(LogPrinter.LogType.ASSERT, tag, msg.invoke(), tr)
 
-    fun wtf(tag: String, msg: String, tr: Throwable? = null)
-            = log(LogPrinter.LogType.ASSERT, tag, msg, tr)
+    override fun wtf(tag: String, msg: String, tr: Throwable? ) =
+        log(LogPrinter.LogType.ASSERT, tag, msg, tr)
 
     private fun log(type: LogPrinter.LogType, tag: String, msg: String, tr: Throwable? = null) {
         printers.forEach { printer ->
