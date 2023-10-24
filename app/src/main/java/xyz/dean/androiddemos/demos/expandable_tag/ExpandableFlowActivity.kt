@@ -17,7 +17,7 @@ class ExpandableFlowActivity : BaseActivity() {
         setContentView(R.layout.activity_expandable_flow)
         val flowLayout = findViewById<ExpandableFlowLayout>(R.id.flowLayout)
 
-        val data = listOf("盖浇饭", "叉烧包", "炒饭", "特惠套餐", "夏日凉饮", "麻辣烫", "特色小菜", "每日推荐", "煲仔饭", "黄焖鸡")
+        val data = listOf("盖浇饭盖浇饭盖浇饭盖浇饭盖浇饭盖浇饭盖浇饭盖浇饭", "叉烧包", "炒饭", "特惠套餐", "夏日凉饮", "麻辣烫", "特色小菜", "每日推荐", "煲仔饭", "黄焖鸡")
         data.forEach {
             val view = LayoutInflater.from(this)
                 .inflate(R.layout.item_infinite_rv, flowLayout, false)
