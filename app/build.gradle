@@ -6,13 +6,14 @@ plugins {
 }
 
 android {
+    namespace 'xyz.dean.androiddemos'
     rootProject.apply(delegate, rootProject.compileConfig)
 
     defaultConfig {
         applicationId "xyz.dean.androiddemos"
         rootProject.apply(delegate, rootProject.sdkConfig)
-        versionCode 1
-        versionName "1.0"
+        versionCode 12
+        versionName "1.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -23,13 +24,12 @@ android {
         }
     }
 
-    lintOptions {
-        // 如果为 true，则当lint发现错误时停止 gradle构建 (默认为true)
-        abortOnError false
-    }
-
     buildFeatures {
         dataBinding true
+    }
+
+    lint {
+        abortOnError false
     }
 }
 

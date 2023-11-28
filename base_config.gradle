@@ -5,8 +5,8 @@ ext {
     }
 
     compileConfig = {
-        compileSdkVersion 30
-        buildToolsVersion "30.0.3"
+        compileSdkVersion 34
+        buildToolsVersion "34.0.0"
 
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
@@ -19,13 +19,13 @@ ext {
 
     sdkConfig = {
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 34
     }
 
     // Classpath
-    kotlin_gradle_ver = '1.5.20'
-    android_gradle_ver = '4.2.1'
-    google_service_gradle_ver = '4.3.8'
+    kotlin_gradle_ver = '1.9.20'
+    android_gradle_ver = '8.1.2'
+    google_service_gradle_ver = '4.3.15'
 
     deps = [:]
 

@@ -12,7 +12,7 @@ import xyz.dean.androiddemos.R
 import xyz.dean.androiddemos.common.log
 import xyz.dean.util.reactivex.BindLife
 import xyz.dean.util.task.TaskExecutor
-import xyz.dean.util.task.TaskExecutor.Companion.task
+import xyz.dean.util.task.task
 import java.util.concurrent.Executors
 
 class DagTaskExecActivity : BaseActivity(), BindLife {

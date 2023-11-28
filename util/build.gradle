@@ -4,12 +4,11 @@ plugins {
 }
 
 android {
+    namespace 'xyz.dean.util'
     rootProject.apply(delegate, rootProject.compileConfig)
 
     defaultConfig {
         rootProject.apply(delegate, rootProject.sdkConfig)
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
