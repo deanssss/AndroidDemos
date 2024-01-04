@@ -64,6 +64,13 @@ dependencies {
     implementation deps.google.firebase_analytics
     implementation deps.google.gson
 
+    implementation "androidx.media3:media3-exoplayer:1.2.0"
+    implementation "androidx.media3:media3-exoplayer-dash:1.2.0"
+    implementation "androidx.media3:media3-ui:1.2.0"
+    implementation 'androidx.media3:media3-exoplayer-hls:1.2.0'
+
+    implementation 'com.tencent.tbs:tbssdk:44286'
+
     // Test libs
     testImplementation deps.test.junit
     androidTestImplementation deps.test.androidx.runner

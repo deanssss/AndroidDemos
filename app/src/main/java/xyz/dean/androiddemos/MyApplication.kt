@@ -11,6 +11,7 @@ import xyz.dean.androiddemos.demos.infinite_list.InfiniteTabActivity
 import xyz.dean.androiddemos.demos.memdetector.MemDetectorActivity
 import xyz.dean.androiddemos.demos.rating_bar.CusRatingBarDemoActivity
 import xyz.dean.androiddemos.demos.sample.SampleActivity
+import xyz.dean.androiddemos.demos.webvideo2native.WebVideo2NativeActivity
 import xyz.dean.framework.common.GlobalApplicationAgent
 import xyz.dean.framework.common.util.LogUtil
 import xyz.dean.framework.common.util.Logger
@@ -36,6 +37,7 @@ class MyApplication : Application() {
         addDemo(CusRatingBarDemoActivity.demoItem)
         addDemo(DagTaskExecActivity.demoItem)
         addDemo(MemDetectorActivity.demoItem)
+        addDemo(WebVideo2NativeActivity.demoItem)
     }
 
     override fun attachBaseContext(base: Context) {

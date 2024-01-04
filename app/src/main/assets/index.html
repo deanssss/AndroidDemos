@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>测试网页</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"
+          name="viewport">
+    <script type="text/javascript">
+            window.onload = touchtouch;
+            function touchtouch(){
+                var mytag = document.getElementById('mytag');
+                console.log("mytag:"+mytag)
+                mytag.addEventListener("touchStart",handlerTouch,false);
+                mytag.addEventListener("touchend",handlerTouch,false);
+                mytag.addEventListener("touchcancel",handlerTouch,false);
+                mytag.addEventListener("touchleave",handlerTouch,false);
+                mytag.addEventListener("touchmove",handlerTouch,false);
+            }
+            function handlerTouch(evt){
+                log(evt);
+            }
+        </script>
+</head>
+
+<body>
+<p>测试网页哈哈哈</p>
+<div>
+    <div style="background-color: aqua; height: 100px;text-align: center;">1</div>
+    <div style="background-color: gray; height: 100px;text-align: center;">2</div>
+    <div style="background-color: rgb(80, 69, 69);height:500px;">
+        <mytag id="mytag"
+                style="position:absolute;width:350px; height:500px;">
+            相机占位标签
+        </mytag>
+        <br/><br/><br/><br/>
+        <a href="http://soft.imtt.qq.com/browser/tes/feedback.html" style="position:absolute;color:rgba(187, 255, 0, 0.482)"> 点击跳转哈哈哈</a><br/>
+        <a href="https://debugtbs.qq.com" style="position:absolute;color:rgba(187, 255, 0, 0.482)"> 点击跳转哈哈哈eeee</a>
+    </div>
+    <div style="background-color: gold; height: 100px;text-align: center;">4</div>
+    <div style="background-color: red; height: 100px;text-align: center;">5</div>
+    <div style="background-color: green; height: 100px;text-align: center;">6</div>
+</div>
+
+</body>
+
+</html>
