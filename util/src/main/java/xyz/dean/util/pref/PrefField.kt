@@ -7,17 +7,17 @@ import kotlin.reflect.KProperty
 
 abstract class PrefField<T>
 internal constructor(
-         var default: T,
-        private val useCommit: Boolean = false,
-        private val writer: Editor.(String, T?) -> Editor,
-        private val reader: SharedPreferences.(String) -> T?
+    var default: T,
+    private val useCommit: Boolean = false,
+    private val writer: Editor.(String, T?) -> Editor,
+    private val reader: SharedPreferences.(String) -> T?
 ) {
-    private lateinit var cachedKey: String
+    private var cachedKey: String = ""
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
         thisRef as PrefModel
-        val pref = thisRef.getPreference()
-        if (!::cachedKey.isInitialized)
+        val pref = thisRef.preferences
+        if (cachedKey.isEmpty())
             cachedKey = thisRef.getKey(property)
 
         return pref.reader(cachedKey) ?: default
@@ -26,8 +26,8 @@ internal constructor(
     @SuppressLint("ApplySharedPref")
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T?) {
         thisRef as PrefModel
-        val editor = thisRef.getPreference().edit()
-        if (!::cachedKey.isInitialized)
+        val editor = thisRef.preferences.edit()
+        if (cachedKey.isEmpty())
             cachedKey = thisRef.getKey(property)
 
         editor.writer(cachedKey, value)
@@ -77,4 +77,15 @@ internal constructor(default: Boolean?) : PrefField<Boolean?>(
         default,
         writer = { k, v -> if (v != null) putBoolean(k, v) else remove(k) },
         reader = { k -> if (contains(k)) getBoolean(k, false) else null }
+)
+
+class ObjectField<T>
+internal constructor(
+    default: T?,
+    serializer: (T) -> String,
+    parser: (String) -> T,
+) : PrefField<T?>(
+    default,
+    writer = { k, v -> if (v != null) putString(k, serializer(v)) else remove(k) },
+    reader = { k -> if (contains(k)) parser(getString(k, "")!!) else null }
 )

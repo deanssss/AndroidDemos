@@ -6,36 +6,24 @@ import android.content.SharedPreferences
 import kotlin.reflect.KProperty
 
 abstract class PrefModel(
-        private val fileName: String,
-        private val mode: Int = Context.MODE_PRIVATE,
-        private val contextProvider: () -> Context
+    private val fileName: String,
+    private val mode: Int = Context.MODE_PRIVATE,
+    private val contextProvider: () -> Context
 ) {
     private val keyMap = mutableMapOf<String, String>()
 
-    init {
-        /* TODO 我知道这依然不是一个好的解决办法，但是相比通过反射获取运行时注解的方法，已经好了不少。
-         *      后面我会尝试使用注解处理器在编译时解决这个问题，也许会放弃设置别名的功能。
-         */
-        @Suppress("LeakingThis")
-        setAlias()
+    protected fun <T, F : PrefField<T>> F.alias(
+        property: KProperty<*>, alias: String
+    ): F = apply {
+        if (alias.isEmpty()) {
+            error("Cannot set a empty preference key. property name: ${property.name}")
+        }
+        keyMap[property.name] = alias
     }
 
-    /**
-     * Override this method and call [KProperty.alias] to set alias for model property.
-     * But you should not read property's value in this method,
-     * because this method is called by init block, when you read a property, it may not be initialized.
-     */
-    open fun setAlias() { }
-
-    protected infix fun KProperty<*>.alias(alias: String) {
-        keyMap[this.name] = alias
-    }
-
-    private val preferences: SharedPreferences by lazy {
+    val preferences: SharedPreferences by lazy {
         contextProvider().getSharedPreferences(fileName, mode)
     }
-
-    fun getPreference() = preferences
 
     @SuppressLint("ApplySharedPref")
     fun clear(isCommit: Boolean = false) {
@@ -50,6 +38,7 @@ abstract class PrefModel(
      * The non-null Pref property cannot be removed by assign to null,
      * but you can use this method to remove it.
      */
+    @SuppressLint("ApplySharedPref")
     fun remove(property: KProperty<*>, isCommit: Boolean = false) {
         val key = getKey(property)
         val editor = preferences.edit().remove(key)

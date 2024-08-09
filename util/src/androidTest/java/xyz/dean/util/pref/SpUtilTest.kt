@@ -3,11 +3,14 @@ package xyz.dean.util.pref
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.gson.Gson
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import xyz.dean.util.fromJson
+import xyz.dean.util.toJson
 
 @RunWith(AndroidJUnit4::class)
 class SpUtilTest {
@@ -36,9 +39,17 @@ class SpUtilTest {
         var boolean2: Boolean? by nullableBooleanField()
         var boolean3: Boolean? by nullableBooleanField(default = false)
 
-        override fun setAlias() {
-            ::string1 alias "student"
-        }
+        var obj1: Dt by objectField(
+            default = Dt("default", 0),
+            serializer = Dt.Companion::serializer,
+            parser = Dt.Companion::parser)
+        var obj2: Dt? by nullableObjectField(
+            serializer = Dt.Companion::serializer,
+            parser = Dt.Companion::parser)
+        var obj3: Dt? by nullableObjectField(
+            default = Dt("default-1", 1),
+            serializer = Dt.Companion::serializer,
+            parser = Dt.Companion::parser)
     }
 
     lateinit var spModel: TestModel
@@ -75,6 +86,12 @@ class SpUtilTest {
             Assert.assertEquals(boolean1, false)
             Assert.assertEquals(boolean2, null)
             Assert.assertEquals(boolean3, false)
+
+            Assert.assertEquals(obj1.str, "default")
+            Assert.assertEquals(obj1.int, 0)
+            Assert.assertEquals(obj2, null)
+            Assert.assertEquals(obj3?.str, "default-1")
+            Assert.assertEquals(obj3?.int, 1)
         }
 
         // write
@@ -109,9 +126,9 @@ class SpUtilTest {
             long1 = 9999999999L
             Assert.assertEquals(long1, 9999999999L)
             long2 = 9999999999L
-            Assert.assertEquals(long2!!, 9999999999L)
+            Assert.assertEquals(long2, 9999999999L)
             long3 = 9999999999L
-            Assert.assertEquals(long3!!, 9999999999L)
+            Assert.assertEquals(long3, 9999999999L)
         }
 
         spModel.run {
@@ -132,14 +149,25 @@ class SpUtilTest {
             Assert.assertEquals(boolean3, true)
         }
 
+        spModel.run {
+            val dt = Dt("test", 100)
+            obj1 = dt
+            Assert.assertEquals(obj1.str, dt.str)
+            Assert.assertEquals(obj1.int, dt.int)
+            obj2 = dt
+            Assert.assertEquals(obj2?.str, dt.str)
+            Assert.assertEquals(obj2?.int, dt.int)
+            obj3 = dt
+            Assert.assertEquals(obj3?.str, dt.str)
+            Assert.assertEquals(obj3?.int, dt.int)
+        }
+
         // remove
         spModel.run {
             remove(::string1)
             Assert.assertEquals(string1, "zhangsan")
             string2 = null
-            Assert.assertTrue(string2 == null)
-            // Interesting...
-            // Assert.assertEquals(string2, null)
+             Assert.assertEquals(string2, null)
             string3 = null
             Assert.assertEquals(string3, "wangwu")
         }
@@ -148,8 +176,7 @@ class SpUtilTest {
             remove(::int1)
             Assert.assertEquals(int1, 23)
             int2 = null
-            Assert.assertTrue(int2 == null)
-            // Assert.assertEquals(int2, null)
+            Assert.assertEquals(int2, null)
             int3 = null
             Assert.assertEquals(int3, 24)
         }
@@ -158,7 +185,7 @@ class SpUtilTest {
             remove(::strSet1)
             Assert.assertTrue(strSet1.isEmpty())
             strSet2 = null
-            Assert.assertTrue(strSet2 == null)
+            Assert.assertEquals(strSet2, null)
             strSet3 = null
             Assert.assertTrue(strSet3?.first() == "default")
         }
@@ -167,8 +194,7 @@ class SpUtilTest {
             remove(::long1)
             Assert.assertEquals(long1, 0L)
             long2 = null
-            Assert.assertTrue(long2 == null)
-            // Assert.assertEquals(long2, null)
+            Assert.assertEquals(long2, null)
             long3 = null
             Assert.assertEquals(long3, 0L)
         }
@@ -177,8 +203,7 @@ class SpUtilTest {
             remove(::float1)
             Assert.assertEquals(float1, 0f)
             float2 = null
-            Assert.assertTrue(float2 == null)
-            // Assert.assertEquals(float2, null)
+            Assert.assertEquals(float2, null)
             float3 = null
             Assert.assertEquals(float3, 0f)
         }
@@ -187,10 +212,30 @@ class SpUtilTest {
             remove(::boolean1)
             Assert.assertEquals(boolean1, false)
             boolean2 = null
-            Assert.assertTrue(boolean2 == null)
-            // Assert.assertEquals(boolean2, null)
+            Assert.assertEquals(boolean2, null)
             boolean3 = null
             Assert.assertEquals(boolean3, false)
+        }
+
+        spModel.run {
+            remove(::obj1)
+            Assert.assertEquals(obj1.str, "default")
+            Assert.assertEquals(obj1.int, 0)
+            obj2 = null
+            Assert.assertEquals(obj2, null)
+            obj3 = null
+            Assert.assertEquals(obj3?.str, "default-1")
+            Assert.assertEquals(obj3?.int, 1)
+        }
+    }
+
+    class Dt(
+        val str: String,
+        val int: Int
+    ) {
+        companion object {
+            fun serializer(dt: Dt): String = dt.toJson()
+            fun parser(json: String): Dt = Gson().fromJson(json)
         }
     }
 

@@ -19,3 +19,14 @@ fun PrefModel.floatField(default: Float) = nullableFloatField().noNull(default)
 
 fun PrefModel.nullableBooleanField(default: Boolean? = null) = BooleanField(default)
 fun PrefModel.booleanField(default: Boolean) = nullableBooleanField().noNull(default)
+
+fun <T> PrefModel.nullableObjectField(
+    default: T? = null,
+    serializer: (T) -> String,
+    parser: (String) -> T,
+) = ObjectField(default, serializer, parser)
+fun <T> PrefModel.objectField(
+    default: T,
+    serializer: (T) -> String,
+    parser: (String) -> T,
+) = nullableObjectField(serializer = serializer, parser = parser).noNull(default)

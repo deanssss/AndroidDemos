@@ -11,8 +11,5 @@ object MainPrefModel : PrefModel(
     SP_NAME_MAIN, Context.MODE_PRIVATE, { MyApplication.appContext }
 ) {
     var last: String by stringField(default = "")
-
-    override fun setAlias() {
-        ::last alias "first-load"
-    }
+        .alias(this::last, "first-load")
 }
