@@ -57,6 +57,9 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="landscape"
             android:exported="false"/>
+        <activity
+            android:name=".demos.expandable_tag.ExpandableFlowActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

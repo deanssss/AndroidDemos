@@ -66,10 +66,10 @@ class CalendarMultiDateView @JvmOverloads constructor(
         }
     }
 
-    override fun onDrawForeground(canvas: Canvas?) {
+    override fun onDrawForeground(canvas: Canvas) {
         super.onDrawForeground(canvas)
         for (i in 0 until num) {
-            canvas?.drawText("${datesNum[i] ?: "0"}",
+            canvas.drawText("${datesNum[i] ?: "0"}",
                 itemsPos[i]!! + textPaddingStart,
                 textPaddingTop + textSizePx,
                 numPaint)

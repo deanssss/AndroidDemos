@@ -15,5 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_infinite_rv_item"
+        android:lines="1"
+        android:ellipsize="end"
         tools:text="示例文本"/>
 </LinearLayout>

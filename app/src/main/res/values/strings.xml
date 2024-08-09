@@ -57,4 +57,7 @@
 
     <string name="d_calendar_demo_name">自定义日历</string>
     <string name="d_calendar_describe_text">自定义日历示例。</string>
+
+    <string name="expandable_flow_demo_name">ExpandableFlowLayout</string>
+    <string name="expandable_flow_describe_text">可展开FlowLayout</string>
 </resources>

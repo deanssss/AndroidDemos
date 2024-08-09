@@ -18,8 +18,8 @@ class DCalendarActivity : BaseActivity() {
         findViewById<View>(R.id.back_view_mask).setOnClickListener { onBackPressed() }
         val calendar = findViewById<DCalendar>(R.id.calendar)
         calendar.setData(
-            start = Calendar.getInstance().apply { set(2021, 0, 1) },
-            end = Calendar.getInstance().apply { set(2024, 0, 1) },
+//            start = Calendar.getInstance().apply { set(2021, 0, 1) },
+//            end = Calendar.getInstance().apply { set(2024, 0, 1) },
             asyncDataProvider = { y, m, callback ->
                 thread {
                     Thread.sleep(1000)
