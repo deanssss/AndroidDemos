@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="14dp"
+    android:paddingEnd="8dp"
+    tools:background="#27425f"
+    tools:layout_width="500dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/prev_month_iv"
+            android:src="@drawable/ic_arrow_back"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/year_month_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="80dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            tools:text="2022年12月"/>
+
+        <ImageView
+            android:id="@+id/next_month_iv"
+            android:src="@drawable/ic_arrow_forward"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/calendar_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:overScrollMode="never" />
+</LinearLayout>

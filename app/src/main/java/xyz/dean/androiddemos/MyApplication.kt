@@ -6,6 +6,7 @@ import xyz.dean.androiddemos.common.log
 import xyz.dean.androiddemos.demos.behavior.BehaviorTestActivity
 import xyz.dean.androiddemos.demos.blur_image.BlurImageActivity
 import xyz.dean.androiddemos.demos.dag_task.DagTaskExecActivity
+import xyz.dean.androiddemos.demos.dcalendar.DCalendarActivity
 import xyz.dean.androiddemos.demos.dragtreelist.DragTreeListActivity
 import xyz.dean.androiddemos.demos.infinite_list.InfiniteTabActivity
 import xyz.dean.androiddemos.demos.memdetector.MemDetectorActivity
@@ -36,6 +37,7 @@ class MyApplication : Application() {
         addDemo(CusRatingBarDemoActivity.demoItem)
         addDemo(DagTaskExecActivity.demoItem)
         addDemo(MemDetectorActivity.demoItem)
+        addDemo(DCalendarActivity.demoItem)
     }
 
     override fun attachBaseContext(base: Context) {
