@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+    </data>
+
+    <RelativeLayout
+      android:id="@+id/container_rl"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:context=".demos.sample.SampleActivity">
+
+        <FrameLayout
+          android:id="@+id/container_fl"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="#1e994999">
+
+            <TextView
+              android:id="@+id/sample_describe_tv"
+              android:text="@string/sample_describe_text"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent" />
+        </FrameLayout>
+
+        <Button
+          android:id="@+id/reset_bt"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone"
+          android:layout_marginBottom="100dp"
+          android:layout_centerHorizontal="true"
+          android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</layout>

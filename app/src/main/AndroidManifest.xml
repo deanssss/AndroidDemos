@@ -60,6 +60,12 @@
         <activity
             android:name=".demos.expandable_tag.ExpandableFlowActivity"
             android:exported="false" />
+        <activity
+            android:name=".demos.stackcard.StackCardActivity"
+            android:exported="false" />
+        <activity
+          android:name=".demos.scaleview.ScaleViewActivity"
+          android:exported="false" />
     </application>
 
 </manifest>

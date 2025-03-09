@@ -60,4 +60,7 @@
 
     <string name="expandable_flow_demo_name">ExpandableFlowLayout</string>
     <string name="expandable_flow_describe_text">可展开FlowLayout</string>
+
+    <string name="stack_card_demo_name">卡片堆叠</string>
+    <string name="stack_card_describe_text">RecyclerView实现卡片堆叠示例.</string>
 </resources>
