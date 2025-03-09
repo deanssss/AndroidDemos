@@ -38,10 +38,9 @@ private class PracticeListAdapter(private val practiceList: List<DemoItem>) : Re
     override fun getItemCount(): Int = practiceList.size
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        val context = holder.itemView.context
         holder.itemView.findViewById<ImageView>(R.id.iv_practice_icon).setImageResource(practiceList[position].iconRes)
-        holder.itemView.findViewById<TextView>(R.id.tv_practice_name).text = context.getString(practiceList[position].nameRes)
-        holder.itemView.findViewById<TextView>(R.id.tv_practice_describe).text = context.getString(practiceList[position].describeRes)
+        holder.itemView.findViewById<TextView>(R.id.tv_practice_name).text = practiceList[position].name
+        holder.itemView.findViewById<TextView>(R.id.tv_practice_describe).text = practiceList[position].describe
         holder.itemView.setOnClickListener {
             holder.itemView.context.apply {
                 startActivity(Intent(this, practiceList[position].clazz))

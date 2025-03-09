@@ -52,6 +52,12 @@
         <activity
             android:name=".demos.memdetector.MemDetectorActivity"
             android:exported="false" />
+        <activity
+            android:name=".demos.stackcard.StackCardActivity"
+            android:exported="false" />
+        <activity
+          android:name=".demos.scaleview.ScaleViewActivity"
+          android:exported="false" />
     </application>
 
 </manifest>

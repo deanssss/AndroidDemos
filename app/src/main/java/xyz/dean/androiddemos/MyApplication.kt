@@ -11,12 +11,19 @@ import xyz.dean.androiddemos.demos.infinite_list.InfiniteTabActivity
 import xyz.dean.androiddemos.demos.memdetector.MemDetectorActivity
 import xyz.dean.androiddemos.demos.rating_bar.CusRatingBarDemoActivity
 import xyz.dean.androiddemos.demos.sample.SampleActivity
+import xyz.dean.androiddemos.demos.scaleview.ScaleViewActivity
+import xyz.dean.androiddemos.demos.stackcard.StackCardActivity
 import xyz.dean.framework.common.GlobalApplicationAgent
 import xyz.dean.framework.common.util.LogUtil
 import xyz.dean.framework.common.util.Logger
+import xyz.dean.util.ApplicationHolder
 import xyz.dean.util.logger.ILog
 
 class MyApplication : Application() {
+    init {
+        ApplicationHolder.init(this)
+    }
+
     override fun onCreate() {
         super.onCreate()
         initDemos()
@@ -36,6 +43,8 @@ class MyApplication : Application() {
         addDemo(CusRatingBarDemoActivity.demoItem)
         addDemo(DagTaskExecActivity.demoItem)
         addDemo(MemDetectorActivity.demoItem)
+        addDemo(StackCardActivity.demoItem)
+        addDemo(ScaleViewActivity.demoItem)
     }
 
     override fun attachBaseContext(base: Context) {
